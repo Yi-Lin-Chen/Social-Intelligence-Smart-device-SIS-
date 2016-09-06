@@ -48,8 +48,20 @@ $(function() {
                                 <tr>
                                     <td>{{ $access->id }}</td>
                                     <td>{{ $access->user_id }}</td>
-                                    <td>{{ $access->expire_day }}</td>
-                                    <td>{{ $access->getActualExpireTime() }}</td>
+                                    <td>
+                                        @if( $access->expire_day == 0 )
+                                            Never
+                                        @else
+                                            {{ $access->expire_day }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if( $access->expire_day == 0 )
+                                            -
+                                        @else
+                                            {{ $access->getActualExpireTime() }}
+                                        @endif
+                                    </td>
                                     <td>{{ $access->created_at }}</td>
                                     <td>{{ $access->updated_at }}</td>
                                     <td>
@@ -75,7 +87,7 @@ $(function() {
     </div>
 
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Grant Access To User</div>
                 <div class="panel-body">

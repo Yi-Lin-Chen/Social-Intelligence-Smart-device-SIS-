@@ -28,12 +28,24 @@ class Access extends Model
     ];
 
     public function getActualExpireTime() {
+
+        if( $this->expire_day == 0 ) {
+            // Will not expire
+            return null;
+        }
+
         $date = new \DateTime($this->created_at, new \DateTimeZone(config('app.timezone')));
         $date->modify( '+' . ($this->expire_day * 24). ' hour');
         return $date->format('Y-m-d H:i:s');
     }
 
     public function isExpired() {
+
+        if( $this->expire_day == 0 ) {
+            // Will not expire
+            return false;
+        }
+
         $expire_date  = new \DateTime($this->getActualExpireTime(), new \DateTimeZone(config('app.timezone')));
         $current_date = new \DateTime('NOW', new \DateTimeZone(config('app.timezone')));
         return $expire_date < $current_date;
