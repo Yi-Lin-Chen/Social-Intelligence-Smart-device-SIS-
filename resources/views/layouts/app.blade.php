@@ -13,6 +13,8 @@
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
 
+    @yield('styles')
+
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -52,6 +54,8 @@
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
+                        <li><a href="/user">User</a></li>
+                        <li><a href="/access">Access</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret"></span>
