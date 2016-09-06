@@ -21,7 +21,7 @@
                         <thead>
                             <tr>
                                 <th>
-                                    ID
+                                    User ID
                                 </th>
                                 <th>
                                     Name

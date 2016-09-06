@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Access;
 use App\Http\Requests;
 
 class AccessController extends Controller
@@ -17,7 +17,7 @@ class AccessController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +25,9 @@ class AccessController extends Controller
      */
     public function index()
     {
-        //
+        return view('access', [
+            'access_array' => Access::all()
+        ]);
     }
 
     /**

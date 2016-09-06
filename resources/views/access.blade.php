@@ -9,62 +9,55 @@
 </style>
 @endsection
 
+@section('script')
+<script type="text/javascript">
+$(function() {
+    $(document).on('click', '.qr_button', function() {
+        //console.log('.qr_button click');
+        bootbox.alert('<img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chl=' + $(this).data('code') +  '\">');
+    });
+});
+</script>
+@endsection
+
 @section('content')
 <div class="container">
 
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">User List</div>
+                <div class="panel-heading">Access List</div>
                 <div class="panel-body">
                     <table class="table table-hover table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>
-                                    ID
-                                </th>
-                                <th>
-                                    Name
-                                </th>
-                                <th>
-                                    Email
-                                </th>
-                                <th>
-                                    Phone
-                                </th>
-                                <th>
-                                    Level
-                                </th>
-                                <th>
-                                    Created At
-                                </th>
-                                <th>
-                                    Last Update
-                                </th>
-                                <th>
-                                    Update
-                                </th>
-                                <th>
-                                    Delete
-                                </th>
+                                <th>Access ID</th>
+                                <th>Belong To</th>
+                                <th>Expire Day</th>
+                                <th>Actual Time</th>
+                                <th>Created At</th>
+                                <th>Last Update</th>
+                                <th>View QR</th>
+                                <th>Notify User</th>
+                                <th>Update</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach( $users as $user )
+                            @foreach( $access_array as $access )
                                 <tr>
-                                    <td>{{ $user->id }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->phone }}</td>
+                                    <td>{{ $access->id }}</td>
+                                    <td>{{ $access->user_id }}</td>
+                                    <td>{{ $access->expire_day }}</td>
+                                    <td>{{ $access->getActualExpireTime() }}</td>
+                                    <td>{{ $access->created_at }}</td>
+                                    <td>{{ $access->updated_at }}</td>
                                     <td>
-                                        @if( $user->level == 1 )
-                                            Manager
-                                        @else
-                                            User
-                                        @endif
+                                        <button data-code="{{ $access->qr_code }}" class="btn btn-default btn-xs qr_button">QR</button>
                                     </td>
-                                    <td>{{ $user->created_at }}</td>
-                                    <td>{{ $user->updated_at }}</td>
+                                    <td>
+                                        <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-inbox"></span></button>
+                                    </td>
                                     <td>
                                         <button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
                                     </td>
@@ -84,7 +77,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Create User</div>
+                <div class="panel-heading">Grant Access To User</div>
                 <div class="panel-body">
 
                     @if( isset($errors) && count($errors) > 0 )

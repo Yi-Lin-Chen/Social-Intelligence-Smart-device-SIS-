@@ -85,5 +85,7 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="/js/bootbox.js" type="text/javascript"></script>
+    @yield('script')
 </body>
 </html>
