@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\User;
+use Validator;
+use Hash;
 
 class UserController extends Controller
 {
@@ -49,7 +51,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'email'  => 'required|email|unique:users',
+            'name' => 'required',
+            'level' => 'required|integer',
+            'phone' => 'required',
+            'password' => 'required|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/user')
+                        ->withErrors($validator)
+                        ->withInput(); // Request::old('field')
+        }
+
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
+        $created = User::create($input);
+
+        return redirect('/user')->with('status', 'User created');
     }
 
     /**
