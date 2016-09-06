@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Access extends Model
 {
+
+    protected $table = 'access';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +24,6 @@ class Access extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 }
