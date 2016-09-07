@@ -52,9 +52,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email'  => 'required|email|unique:users',
             'name' => 'required',
             'level' => 'required|integer',
+            'email'  => 'required|email|unique:users',
             'phone' => 'required',
             'password' => 'required|confirmed',
         ]);

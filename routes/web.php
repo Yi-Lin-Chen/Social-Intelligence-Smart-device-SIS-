@@ -22,3 +22,4 @@ Route::get('/user', 'UserController@index');
 Route::post('/user', 'UserController@store');
 
 Route::get('/access', 'AccessController@index');
+Route::post('/access','AccessController@store');

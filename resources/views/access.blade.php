@@ -104,21 +104,22 @@ $(function() {
                         </div>
                     @endif
 
-                    <form method="post" action="/user">
+                    <form method="post" action="/access">
                         {{ csrf_field() }}
 
                       <div class="row">
                           <div class="col-md-6">
                               <div class="form-group">
-                                  <label for="name">Name</label>
-                                  <input type="text" class="form-control" name="name" id="name" placeholder="Name" value="{{ Request::old('name') }}">
+                                  <label for="user">Belong To</label>
+                                  <select name="user" id="user" class="form-control">
+                                      @foreach( $user_array as $user )
+                                          <option value="{{$user->id}}"> {{$user->name}} </option>
+                                      @endforeach
+                                  </select>
                               </div>
                               <div class="form-group">
-                                <label for="level">Level</label>
-                                <select name="level" id="level" class="form-control">
-                                    <option value="0">User</option>
-                                    <option value="1">Manager</option>
-                                </select>
+                                <label for="expire_day">Level</label>
+                                <input type="text" class="form-control" name="expire_day" id="expire_day" placeholder="Email" value="{{ Request::old('email') }}">
                               </div>
                               <div class="form-group">
                                 <label for="email">Email address</label>
