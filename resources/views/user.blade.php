@@ -110,7 +110,7 @@
                               </div>
                               <div class="form-group">
                                 <label for="level">Level</label>
-                                <select name="level" id="level" class="form-control>
+                                <select name="level" id="level" class="form-control">
                                     <option value="null"></option>
                                     <option value="0">User</option>
                                     <option value="1">Manager</option>
