@@ -112,7 +112,9 @@
                                 </select>
                               </div>
                               <div class="form-group">
-                                <label for="email">Email address</label>
+                                <label for="email">Email address</l
+
+                                    abel>
                                 <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="{{ Request::old('email') }}">
                               </div>
                           </div>

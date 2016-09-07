@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Access;
 use App\User;
 use App\Http\Requests;
+use Validator;
 
 class AccessController extends Controller
 {
@@ -50,25 +51,23 @@ class AccessController extends Controller
      */
     public function store(Request $request)
     {
-        /*$validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'level' => 'required|integer',
-            'email'  => 'required|email|unique:users',
-            'phone' => 'required',
-            'password' => 'required|confirmed',
+        $validator = Validator::make($request->all(), [
+            'user'       => 'required|integer',
+            'expire_day' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
-            return redirect('/user')
+            return redirect('/access')
                         ->withErrors($validator)
                         ->withInput(); // Request::old('field')
         }
 
         $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
-        $created = User::create($input);
+        $qrcode = sha1(uniqid());
+        $access_data = [$qrcode,$input['user'],$input['expire_day']];
+        $created = Access::create($access_data);
 
-        return redirect('/user')->with('status', 'User created'); */
+        return redirect('/access')->with('status', 'Access granted.');
     }
 
     /**
