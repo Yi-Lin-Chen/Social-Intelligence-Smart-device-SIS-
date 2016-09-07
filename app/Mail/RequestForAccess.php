@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\User;
 
 class RequestForAccess extends Mailable
 {
@@ -16,9 +17,10 @@ class RequestForAccess extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $user)
     {
-        //
+        // $user 是要求權限的使用者
+        $this->user = $user;
     }
 
     /**
@@ -28,6 +30,10 @@ class RequestForAccess extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->from('noreply@' . env('MAILGUN_DOMAIN'))
+                    ->text('emails.request-notify', [
+                        'name' => $this->user->name,
+                        'time' => \Carbon\Carbon::now()->toDateTimeString()
+                    ]);
     }
 }

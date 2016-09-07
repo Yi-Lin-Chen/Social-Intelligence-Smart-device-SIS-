@@ -23,6 +23,12 @@ Route::get('/request/redirect', 'RequestController@redirect');
 Route::get('/request/callback', 'RequestController@callback');
 Route::get('/request/complete', 'RequestController@complete');
 
+// Manager Approval
+Route::get('/approval', 'ApprovalController@list');
+Route::get('/approval/{id}', 'ApprovalController@show');
+Route::get('/approval/grant/{id}', 'ApprovalController@grant');
+Route::get('/approval/deny/{id}', 'ApprovalController@deny');
+
 Route::get('/home', 'HomeController@index');
 Route::get('/user', 'UserController@index');
 Route::post('/user', 'UserController@store');

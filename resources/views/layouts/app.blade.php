@@ -15,6 +15,29 @@
     <link rel="stylesheet" href="/css/font-awesome.css">
     <link rel="stylesheet" href="/css/bootstrap-social.css">
 
+    <style media="screen">
+        .table td,
+        .table th {
+            text-align: center;
+        }
+        /* Rounded avatars */
+        .avatar {
+
+            margin-top: 1em;
+            margin-right: 1em;
+            margin-bottom: 1em;
+            position: relative;
+
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+
+            -webkit-box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0,0,0,.2);
+            -moz-box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0,0,0,.2);
+            box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0,0,0,.2);
+        }
+    </style>
+
     @yield('styles')
 
     <!-- Scripts -->
@@ -58,6 +81,7 @@
                     @else
                         <li><a href="/user">User</a></li>
                         <li><a href="/access">Access</a></li>
+                        <li><a href="/approval">Approval</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret"></span>
