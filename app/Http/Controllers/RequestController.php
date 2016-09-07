@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
 use Socialite;
-use App\User;
 use Log;
 use Hash;
-use App\Http\Requests;
+use Mail;
+
+use App\User;
+use App\RequestModel;
 
 class RequestController extends Controller
 {
@@ -23,6 +26,7 @@ class RequestController extends Controller
 
     public function callback(Request $request)
     {
+        // 防止有人誤闖
         if( $request->input('code') == null )
             abort(403);
 
@@ -40,7 +44,7 @@ class RequestController extends Controller
             Log::info('Got New User');
 
             // Save User to DB
-            User::create([
+            $check = User::create([
                 'name'  => $obj->user['name'],
                 'email' => $obj->user['email'],
                 'password' => Hash::make($obj->user['id']),
@@ -54,10 +58,37 @@ class RequestController extends Controller
             Log::info('Old User');
             Log::info($check);
 
+            // Insert fb_id if null
+            if( $check->fb_id == null ) {
+                $check->fb_id = $obj->user['id'];
+                $check->save();
+            }
+
         }
+
+        // 存入 Request 紀錄
+        RequestModel::create([
+            'user_id' => $check->id,
+            'state'   => 'pending'
+        ]);
+
+        // 通知管理員有人要求權限
+        $this->notifyManager($check);
 
         return view('request-complete', [
             'name' => $obj->user['name']
         ]);
+    }
+
+    private function notifyManager(User $user) {
+
+        // Get All manager
+        $manager_list = User::where('level', 1)->get();
+
+        foreach( $manager_list as $manager ) {
+            Log::debug('Send notify mail to ' . $manager->name);
+            Mail::to($manager)->send(new \App\Mail\RequestForAccess($user));
+        }
+
     }
 }

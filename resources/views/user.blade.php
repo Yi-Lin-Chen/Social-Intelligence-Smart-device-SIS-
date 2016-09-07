@@ -1,12 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-<style media="screen">
-    .table td,
-    .table th {
-        text-align: center;
-    }
-</style>
+
 @endsection
 
 @section('content')
