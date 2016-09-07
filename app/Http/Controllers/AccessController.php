@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Access;
+use App\User;
 use App\Http\Requests;
 
 class AccessController extends Controller
@@ -26,7 +27,8 @@ class AccessController extends Controller
     public function index()
     {
         return view('access', [
-            'access_array' => Access::all()
+            'access_array' => Access::all(),
+            'user_array'   => User::all()
         ]);
     }
 
@@ -48,7 +50,25 @@ class AccessController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*$validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'level' => 'required|integer',
+            'email'  => 'required|email|unique:users',
+            'phone' => 'required',
+            'password' => 'required|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/user')
+                        ->withErrors($validator)
+                        ->withInput(); // Request::old('field')
+        }
+
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
+        $created = User::create($input);
+
+        return redirect('/user')->with('status', 'User created'); */
     }
 
     /**
