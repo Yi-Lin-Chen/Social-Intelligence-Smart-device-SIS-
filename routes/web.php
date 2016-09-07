@@ -17,6 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// Facebook Login Route
+Route::get('/request', 'RequestController@request');
+Route::get('/request/redirect', 'RequestController@redirect');
+Route::get('/request/callback', 'RequestController@callback');
+Route::get('/request/complete', 'RequestController@complete');
+
 Route::get('/home', 'HomeController@index');
 Route::get('/user', 'UserController@index');
 Route::post('/user', 'UserController@store');
