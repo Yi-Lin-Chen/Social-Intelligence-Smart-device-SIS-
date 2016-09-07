@@ -19,11 +19,13 @@ class QueryController extends Controller
      * Test: http://localhost:8000/api/query?qr_code=e472b7e8d315004ec7a14268f18f95d8a9728173&checksum=adc293a667163a1b5008cf26bbe76a8e3f4fa233
      */
 
-    private function checkSum($qr_code, $checksum) {
+    private function checkSum($qr_code, $checksum)
+    {
         return sha1('GoodWeb' . $qr_code) == $checksum;
     }
 
-    private function record($ip, $error_code, $note, $access_id = null) {
+    private function record($ip, $error_code, $note, $access_id = null)
+    {
         Record::create([
             'ip'         => $ip,
             'error_code' => $error_code,
@@ -80,8 +82,6 @@ class QueryController extends Controller
                 }
             }
         }
-
-
 
         return [
             'qr_code'  => $qr_code,
