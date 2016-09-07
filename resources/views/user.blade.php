@@ -112,9 +112,7 @@
                                 </select>
                               </div>
                               <div class="form-group">
-                                <label for="email">Email address</l
-
-                                    abel>
+                                <label for="email">Email address</label>
                                 <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="{{ Request::old('email') }}">
                               </div>
                           </div>
@@ -129,7 +127,7 @@
                               </div>
                               <div class="form-group">
                                 <label for="password_confirmation">Confirm Password</label>
-                                <input type="text" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Email">
+                                <input type="text" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password">
                               </div>
 
                           </div>
