@@ -154,7 +154,7 @@ $(function() {
                               <div class="form-group">
                                   <label for="user_id">Belong To</label>
                                   <select name="user_id" id="user_id" class="form-control">
-                                      <option value="null"></option>
+                                      <option value="null">Please select</option>
                                       @foreach( $user_array as $user )
                                           <option value="{{$user->id}}"> {{$user->name}} </option>
                                       @endforeach

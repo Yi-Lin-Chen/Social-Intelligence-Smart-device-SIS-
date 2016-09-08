@@ -105,7 +105,33 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'level' => 'required|integer',
+            'phone' => 'required',
+            'password' => 'confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/user')
+                ->withErrors($validator)
+                ->withInput(); // Request::old('field')
+        }
+
+        $input = $request->all();
+        unset($input['_token']);
+        unset($input['password_confirmation']);
+
+        if ($input['password'] == null){
+            unset($input['poassword']);
+        }else{
+            $input['password'] = Hash::make($input['password']);
+        }
+
+        User::where('id' , '=' , $id)->update($input);
+        return redirect('/user')->with('status', 'User updated.');
     }
 
     /**

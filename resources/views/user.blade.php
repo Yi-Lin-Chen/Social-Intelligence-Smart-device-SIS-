@@ -8,7 +8,7 @@
 <script>
 $(function() {
 
-    $('.btn-delete').click(function() {
+    $(document).on('click' , '.btn-delete' , function(){
 
         var id = $(this).data('id');
         console.log('btn-delete click, id = ' + id);
@@ -30,6 +30,81 @@ $(function() {
                 });
             }
         });
+    });
+
+    $(document).on('click' , '.btn-update' , function(){
+
+        var user =$(this).data('user');
+        //console.log('btn-update click, user data = ' + user);
+
+
+        bootbox.dialog({
+                    title: "You are updating " + user.name,
+                    message:
+                    '<div class="row">  ' +
+                        '<div class="col-md-12"> ' +
+                            '<form class="form-horizontal" id="form" method="post" action="/user/update/' + user.id + '">' +
+                            '{{ csrf_field() }}' +
+                                '<div class="col-md-6 update-from">' +
+                                    '<div class="form-group"> ' +
+                                        '<label for="name">Name</label> ' +
+                                                '<input id="name" name="name" type="text" placeholder="Name" class="form-control input-md" value="' + user.name + '"> ' +
+                                    '</div> ' +
+                                    '<div class="form-group"> ' +
+                                        '<label for="level">Level</label> ' +
+                                            '<select name="level" id="level" class="form-control">' +
+                                                '<option value="0">User</option>' +
+                                                '<option value="1">Manager</option>' +
+                                            '</select>' +
+                                    '</div>' +
+                                    '<div class="form-group">' +
+                                        '<label for="email">Email address</label>' +
+                                        '<input type="email" class="form-control" name="email" id="email" placeholder="Email" value="' + user.email + '" disabled>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="col-md-6 update-from">' +
+                                    '<div class="form-group"> ' +
+                                        '<label for="phone">Phone</label> ' +
+                                        '<input id="phone" name="phone" type="text" placeholder="Phone (EX: 0912000111)" class="form-control input-md" value="' + user.phone + '">' +
+                                    '</div> ' +
+                                    '<div class="form-group"> ' +
+                                        '<label for="password">New password</label> ' +
+                                        '<input type="password" class="form-control" name="password" id="password" placeholder="New Password">' +
+                                    '</div>' +
+                                    '<div class="form-group"> ' +
+                                        '<label for="password_confirmation">New Password</label> ' +
+                                        '<input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm New Password">' +
+                                    '</div>' +
+                                '</div>' +
+
+                                '<button type="submit" class="btn btn-default">Update</button>' +
+                            '</form>' +
+                        '</div>' +
+                    '</div>',
+
+                    /*buttons: {
+                        cancel:{
+                            label: "Cancel",
+                            className: "btn-default",
+                        },
+                        submit:{
+                            label: "Submit",
+                            className: "btn-primary",
+                            callback: function() {
+                                console.log($(this).attr("value"))
+
+                            }
+                        }
+                    }*/
+                }
+        );
+
+
+
+
+
+
+
 
     });
 });
@@ -38,6 +113,18 @@ $(function() {
 
 @section('content')
 <div class="container">
+
+    @if( isset($errors) && count($errors) > 0 )
+        <div class="alert alert-danger" role="alert">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
+    @if (session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-md-12">
@@ -93,7 +180,7 @@ $(function() {
                                     <td>{{ $user->created_at }}</td>
                                     <td>{{ $user->updated_at }}</td>
                                     <td>
-                                        <button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
+                                        <button data-user="{{ $user }}" class="btn btn-primary btn-xs btn-update"><span class="glyphicon glyphicon-edit"></span></button>
                                     </td>
                                     <td>
                                         <button data-id="{{ $user->id }}" class="btn btn-danger btn-xs btn-delete"><span class="glyphicon glyphicon-remove"></span></button>
@@ -114,17 +201,7 @@ $(function() {
                 <div class="panel-heading">Create User</div>
                 <div class="panel-body">
 
-                    @if( isset($errors) && count($errors) > 0 )
-                        <div class="alert alert-danger" role="alert">
-                            {{ $errors->first() }}
-                        </div>
-                    @endif
 
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
 
                     <form method="post" action="/user">
                         {{ csrf_field() }}
@@ -159,7 +236,7 @@ $(function() {
                               </div>
                               <div class="form-group">
                                 <label for="password_confirmation">Confirm Password</label>
-                                <input type="text" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password">
+                                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password">
                               </div>
 
                           </div>
