@@ -32,9 +32,9 @@ Route::get('/approval/deny/{id}', 'ApprovalController@deny');
 Route::get('/home', 'HomeController@index');
 Route::get('/user', 'UserController@index');
 Route::post('/user', 'UserController@store');
+Route::delete('/user/{id}','UserController@destroy');
 
 Route::get('/access', 'AccessController@index');
 Route::post('/access','AccessController@store');
-Route::delete('/access','AccessController@destroy');
 
 Route::get('/access/notify/{id}', 'AccessController@notify');

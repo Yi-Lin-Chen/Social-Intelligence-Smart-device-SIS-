@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\User;
 use Validator;
 use Hash;
+use Log;
 
 class UserController extends Controller
 {
@@ -67,6 +68,7 @@ class UserController extends Controller
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
+        $input['fb_id'] = 0;
         $created = User::create($input);
 
         return redirect('/user')->with('status', 'User created');
@@ -114,9 +116,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if ($id==1){
-            abort(404);
-        }else{
+        if ( $id == 1 ){
+            abort(403);
+
+        } else {
+            Log::debug('Going to delete id = ' . $id);
             return User::destroy($id);
         }
 

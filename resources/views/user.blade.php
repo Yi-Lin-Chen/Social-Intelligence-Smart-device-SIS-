@@ -6,7 +6,33 @@
 
 @section('script')
 <script>
-    
+$(function() {
+
+    $('.btn-delete').click(function() {
+
+        var id = $(this).data('id');
+        console.log('btn-delete click, id = ' + id);
+
+        bootbox.confirm('Do you really want to delete user #' + id + '?', function(ret) {
+            if(ret) {
+                $.ajax({
+                    url: '/user/' + id,
+                    method: 'DELETE',
+                    data: {
+                        _token: window.Laravel.csrfToken
+                    }
+                }).done(function(resp) {
+                    console.log(resp);
+                    location.href = '/user';
+                }).fail(function(resp) {
+                    bootbox.alert('Delete user fail!');
+                    console.error(resp);
+                });
+            }
+        });
+
+    });
+});
 </script>
 @endsection
 
@@ -70,7 +96,7 @@
                                         <button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
+                                        <button data-id="{{ $user->id }}" class="btn btn-danger btn-xs btn-delete"><span class="glyphicon glyphicon-remove"></span></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -112,7 +138,7 @@
                               <div class="form-group">
                                 <label for="level">Level</label>
                                 <select name="level" id="level" class="form-control">
-                                    <option value="null"></option>
+                                    <option value="null">Please select</option>
                                     <option value="0">User</option>
                                     <option value="1">Manager</option>
                                 </select>
@@ -129,7 +155,7 @@
                               </div>
                               <div class="form-group">
                                   <label for="password">Password</label>
-                                  <input type="password" class="form-control" name="password" id="password" placeholder="Name">
+                                  <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                               </div>
                               <div class="form-group">
                                 <label for="password_confirmation">Confirm Password</label>
