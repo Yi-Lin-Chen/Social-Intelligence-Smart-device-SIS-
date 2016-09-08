@@ -34,9 +34,33 @@ $(function() {
         });
     });
 
+    $(document).on('click' , '.btn-delete' , function(){
+        var id = $(this).data('id');
+        console.log('btn-delete click, id = ' + id);
+
+        bootbox.confirm('Do you really want to delete access #' + id + '?', function(ret) {
+            if (ret) {
+                $.ajax({
+                    url: '/access/' + id,
+                    method: 'DELETE',
+                    data: {
+                        _token: window.Laravel.csrfToken
+                    }
+                }).done(function (resp) {
+                    console.log(resp);
+                    location.href = '/access';
+                }).fail(function (resp) {
+                    bootbox.alert('Delete access fail!');
+                    console.error(resp);
+                });
+            }
+        });
+    } );
+
 });
 </script>
 @endsection
+
 
 @section('content')
 <div class="container">
@@ -92,7 +116,7 @@ $(function() {
                                         <button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
+                                        <button data-id="{{ $access->id }}"  class="btn btn-danger btn-xs btn-delete"><span class="glyphicon glyphicon-remove"></span></button>
                                     </td>
                                 </tr>
                             @endforeach

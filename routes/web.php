@@ -36,5 +36,6 @@ Route::delete('/user/{id}','UserController@destroy');
 
 Route::get('/access', 'AccessController@index');
 Route::post('/access','AccessController@store');
+Route::delete('/access/{id}','AccessController@destroy');
 
 Route::get('/access/notify/{id}', 'AccessController@notify');

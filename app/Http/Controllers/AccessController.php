@@ -124,6 +124,6 @@ class AccessController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Access::destroy($id);
     }
 }
