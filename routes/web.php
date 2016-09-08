@@ -35,3 +35,4 @@ Route::post('/user', 'UserController@store');
 
 Route::get('/access', 'AccessController@index');
 Route::post('/access','AccessController@store');
+Route::delete('/access','AccessController@destroy');
