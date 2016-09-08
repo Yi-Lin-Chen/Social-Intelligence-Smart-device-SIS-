@@ -7,6 +7,7 @@ use App\Access;
 use App\User;
 use App\Http\Requests;
 use Validator;
+use Mail;
 use Log;
 
 class AccessController extends Controller
@@ -19,6 +20,16 @@ class AccessController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function notify($id) {
+
+        $access = Access::find($id);
+
+        if( $access == null )
+            abort(404);
+
+        return Mail::to($access->user()->first())->send(new \App\Mail\NotifyUserWithQRCode($access));
     }
 
     /**

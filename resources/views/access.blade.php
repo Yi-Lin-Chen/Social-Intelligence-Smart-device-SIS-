@@ -12,10 +12,28 @@
 @section('script')
 <script type="text/javascript">
 $(function() {
+
     $(document).on('click', '.qr_button', function() {
         //console.log('.qr_button click');
         bootbox.alert('<img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chl=' + $(this).data('code') +  '\">');
     });
+
+    $(document).on('click', '.notify-user', function() {
+
+        var id = $(this).data('access-id');
+
+        bootbox.confirm('This will send the QR Code to the user, do you wish to do so?', function(ret) {
+            if( ret ) {
+                $.get('/access/notify/' + id, {} , function(ret) {
+                    console.log(ret);
+                }).fail(function(ret) {
+                    bootbox.alert('Error in sending mail');
+                    console.error(ret);
+                });
+            }
+        });
+    });
+
 });
 </script>
 @endsection
@@ -68,7 +86,7 @@ $(function() {
                                         <button data-code="{{ $access->qr_code }}" class="btn btn-default btn-xs qr_button">QR</button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-inbox"></span></button>
+                                        <button data-access-id="{{ $access->id }}" class="btn btn-default btn-xs notify-user"><span class="glyphicon glyphicon-inbox"></span></button>
                                     </td>
                                     <td>
                                         <button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span></button>

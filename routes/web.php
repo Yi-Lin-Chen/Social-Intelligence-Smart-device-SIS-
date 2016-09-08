@@ -35,3 +35,4 @@ Route::post('/user', 'UserController@store');
 
 Route::get('/access', 'AccessController@index');
 Route::post('/access','AccessController@store');
+Route::get('/access/notify/{id}', 'AccessController@notify');

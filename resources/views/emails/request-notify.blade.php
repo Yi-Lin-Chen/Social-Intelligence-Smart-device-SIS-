@@ -6,3 +6,4 @@ Dear Manager,
 
 {{ $time }}
 {{ config('app.name') }}
+{{ config('app.url') }}
