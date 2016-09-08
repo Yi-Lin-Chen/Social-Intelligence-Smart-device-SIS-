@@ -112,34 +112,16 @@ $(function() {
                               <div class="form-group">
                                   <label for="user">Belong To</label>
                                   <select name="user" id="user" class="form-control">
+                                      <option value="null"></option>
                                       @foreach( $user_array as $user )
                                           <option value="{{$user->id}}"> {{$user->name}} </option>
                                       @endforeach
                                   </select>
                               </div>
                               <div class="form-group">
-                                <label for="expire_day">Level</label>
-                                <input type="text" class="form-control" name="expire_day" id="expire_day" placeholder="Email" value="{{ Request::old('email') }}">
+                                <label for="expire_day">Expire Day</label>
+                                <input type="text" class="form-control" name="expire_day" id="expire_day" placeholder="Expire Day(0 is no expire time)" value="{{ Request::old('email') }}">
                               </div>
-                              <div class="form-group">
-                                <label for="email">Email address</label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="{{ Request::old('email') }}">
-                              </div>
-                          </div>
-                          <div class="col-md-6">
-                              <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone (EX: 0912000111)" value="{{ Request::old('phone') }}">
-                              </div>
-                              <div class="form-group">
-                                  <label for="password">Password</label>
-                                  <input type="password" class="form-control" name="password" id="password" placeholder="Name">
-                              </div>
-                              <div class="form-group">
-                                <label for="password_confirmation">Confirm Password</label>
-                                <input type="text" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Email">
-                              </div>
-
                           </div>
                       </div>
                       <hr>

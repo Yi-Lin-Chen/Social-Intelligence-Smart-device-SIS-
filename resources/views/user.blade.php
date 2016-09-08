@@ -105,7 +105,7 @@
                               </div>
                               <div class="form-group">
                                 <label for="level">Level</label>
-                                <select name="level" id="level" class="form-control>
+                                <select name="level" id="level" class="form-control">
                                     <option value="null"></option>
                                     <option value="0">User</option>
                                     <option value="1">Manager</option>
@@ -127,7 +127,7 @@
                               </div>
                               <div class="form-group">
                                 <label for="password_confirmation">Confirm Password</label>
-                                <input type="text" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Email">
+                                <input type="text" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password">
                               </div>
 
                           </div>
