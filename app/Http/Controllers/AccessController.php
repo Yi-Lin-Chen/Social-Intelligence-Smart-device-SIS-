@@ -7,6 +7,7 @@ use App\Access;
 use App\User;
 use App\Http\Requests;
 use Validator;
+use Log;
 
 class AccessController extends Controller
 {
@@ -52,7 +53,7 @@ class AccessController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user'       => 'required|integer',
+            'user_id'    => 'required|integer',
             'expire_day' => 'required|integer'
         ]);
 
@@ -63,9 +64,9 @@ class AccessController extends Controller
         }
 
         $input = $request->all();
-        $qrcode = sha1(uniqid());
-        $access_data = [$qrcode,$input['user'],$input['expire_day']];
-        $created = Access::create($access_data);
+        $input['qr_code'] = sha1(uniqid());
+
+        $created = Access::create($input);
 
         return redirect('/access')->with('status', 'Access granted.');
     }
