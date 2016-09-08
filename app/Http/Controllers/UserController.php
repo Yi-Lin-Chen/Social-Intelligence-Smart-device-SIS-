@@ -114,6 +114,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if ($id==1){
+            abort(404);
+        }else{
+            return User::destroy($id);
+        }
+
     }
 }
