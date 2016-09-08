@@ -4,6 +4,12 @@
 
 @endsection
 
+@section('script')
+<script>
+    
+</script>
+@endsection
+
 @section('content')
 <div class="container">
 
