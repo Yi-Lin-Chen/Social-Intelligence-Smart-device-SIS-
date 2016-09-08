@@ -98,9 +98,41 @@ var updateStatusBtn = function(text, btn_class) {
     <div class="row">
         <div class="col-md-8 col-big">
             <div class="panel panel-default">
-                <div class="panel-heading">Recent Activity</div>
+                <div class="panel-heading">Recent QRCode Query Log</div>
                 <div class="panel-body">
-                    
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Time</th>
+                                <th>IP</th>
+                                <th>Code</th>
+                                <th>Access Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach( $records as $record )
+                            @if( $record->error_code == 200 )
+                            <tr class="success">
+                            @else
+                            <tr>
+                            @endif
+                                <td>{{ $record->id }}</td>
+                                <td>{{ $record->created_at }}</td>
+                                <td>{{ $record->ip }}</td>
+                                <td>{{ $record->error_code }}</td>
+                                <td>
+                                    @if( $record->access_id == null )
+                                        -
+                                    @else
+                                        Access #{{ $record->access_id }}<br/>
+                                        User #{{ $record->access()->first()->user()->first()->id }} {{ $record->access()->first()->user()->first()->name }}
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

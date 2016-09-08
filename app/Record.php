@@ -24,4 +24,8 @@ class Record extends Model
     protected $hidden = [
 
     ];
+
+    public function access() {
+        return $this->belongsTo('App\Access', 'access_id', 'id');
+    }
 }
