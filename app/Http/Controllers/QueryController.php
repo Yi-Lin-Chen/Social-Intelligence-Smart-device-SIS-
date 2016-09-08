@@ -45,7 +45,7 @@ class QueryController extends Controller
 
             // Checksum 錯了叭叭
             $status = false;
-            $error_code = 401;
+            $error_code = 400;
 
             // 紀錄 IP, note = qr_code, access_id = null
             $this->record($request->ip(), $error_code, $qr_code);

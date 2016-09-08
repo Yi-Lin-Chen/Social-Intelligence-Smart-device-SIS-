@@ -29,7 +29,10 @@ Route::get('/approval/{id}', 'ApprovalController@show');
 Route::get('/approval/grant/{id}', 'ApprovalController@grant');
 Route::get('/approval/deny/{id}', 'ApprovalController@deny');
 
+// Direct Control
 Route::get('/home', 'HomeController@index');
+Route::get('/home/door/{query}', 'HomeController@door');
+
 Route::get('/user', 'UserController@index');
 Route::post('/user/update/{id}','UserController@update');
 Route::post('/user', 'UserController@store');
