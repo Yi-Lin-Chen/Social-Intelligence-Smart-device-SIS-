@@ -79,6 +79,7 @@
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
+                        <li><a href="/home">Home</a></li>
                         <li><a href="/user">User</a></li>
                         <li><a href="/access">Access</a></li>
                         <li><a href="/approval">Approval</a></li>
