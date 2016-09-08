@@ -17,10 +17,11 @@ class RequestForAccess extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $req_id)
     {
         // $user 是要求權限的使用者
-        $this->user = $user;
+        $this->user   = $user;
+        $this->req_id = $req_id;
     }
 
     /**
@@ -32,8 +33,9 @@ class RequestForAccess extends Mailable
     {
         return $this->from('noreply@' . env('MAILGUN_DOMAIN'))
                     ->text('emails.request-notify', [
-                        'name' => $this->user->name,
-                        'time' => \Carbon\Carbon::now()->toDateTimeString()
+                        'name'  => $this->user->name,
+                        'req_id'=> $this->req_id,
+                        'time'  => \Carbon\Carbon::now()->toDateTimeString()
                     ]);
     }
 }

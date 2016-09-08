@@ -67,27 +67,27 @@ class RequestController extends Controller
         }
 
         // 存入 Request 紀錄
-        RequestModel::create([
+        $req = RequestModel::create([
             'user_id' => $check->id,
             'state'   => 'pending'
         ]);
 
         // 通知管理員有人要求權限
-        $this->notifyManager($check);
+        $this->notifyManager($check, $req->id);
 
         return view('request-complete', [
             'name' => $obj->user['name']
         ]);
     }
 
-    private function notifyManager(User $user) {
+    private function notifyManager(User $user, $req_id) {
 
         // Get All manager
         $manager_list = User::where('level', 1)->get();
 
         foreach( $manager_list as $manager ) {
             Log::debug('Send notify mail to ' . $manager->name);
-            Mail::to($manager)->send(new \App\Mail\RequestForAccess($user));
+            Mail::to($manager)->send(new \App\Mail\RequestForAccess($user, $req_id));
         }
 
     }
