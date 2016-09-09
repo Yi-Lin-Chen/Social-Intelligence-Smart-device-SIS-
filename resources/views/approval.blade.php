@@ -11,17 +11,27 @@
     margin-bottom: 30px;
 }
 .btn {
-    width: 90%;
+    width: 100%;
 }
 .btn-col {
     margin: 0 auto;
     text-align: center;
+    margin-top: 10px;
 }
 </style>
 @endsection
 
 @section('scripts')
-
+<script>
+$(function(){
+    $('#deny-btn').click(function() {
+        bootbox.dialog({
+            title: "Pick a denail reason",
+            message: ''
+        });
+    });
+});
+</script>
 @endsection
 
 @section('content')
@@ -29,7 +39,15 @@
 
     <div class="row">
         @if( $type == 'list' )
+
         <div class="col-md-12">
+
+            @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
+
             <div class="panel panel-default">
                 <div class="panel-heading">Pending User Request</div>
                 <div class="panel-body">
@@ -77,11 +95,13 @@
                 </div>
 
                 <div class="row custom-row">
-                    <div class="col-md-6 col-md-offset-3">
+
+                    <div class="col-md-12">
                         <a href="https://www.facebook.com/{{ $user->fb_id }}" target="_blank" class="btn btn-block btn-social btn-facebook">
                            <span class="fa fa-facebook"></span> View Profile
                         </a>
                     </div>
+
                 </div>
 
                 <div class="row custom-row">
@@ -89,7 +109,7 @@
                         <a href="/approval/grant/{{ $request->id }}" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Approve</a>
                     </div>
                     <div class="col-md-6 btn-col">
-                        <a href="/approval/deny/{{ $request->id }}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Deny</a>
+                        <a href="/approval/deny/{{ $request->id }}" id="deny-btn" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Deny</a>
                     </div>
                 </div>
 
