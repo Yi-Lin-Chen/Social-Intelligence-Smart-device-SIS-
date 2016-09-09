@@ -17,11 +17,17 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// Enter
+// 讓雷包取回自己所有的 QR Code，限 FB 認證免登入
+Route::get('/enter', 'EnterController@index');
+Route::get('/enter/redirect', 'EnterController@redirect');
+Route::get('/enter/callback', 'EnterController@callback');
+
+
 // Facebook Login Route
 Route::get('/request', 'RequestController@request');
 Route::get('/request/redirect', 'RequestController@redirect');
 Route::get('/request/callback', 'RequestController@callback');
-Route::get('/request/complete', 'RequestController@complete');
 
 // Manager Approval
 Route::get('/approval', 'ApprovalController@list');

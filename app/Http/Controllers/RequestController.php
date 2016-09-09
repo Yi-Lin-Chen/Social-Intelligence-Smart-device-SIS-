@@ -21,6 +21,8 @@ class RequestController extends Controller
 
     public function redirect()
     {
+        config(['services.facebook.redirect' => config('app.url') . '/request/callback']);
+        Log::info('Callback URL changed to: ' . config('services.facebook.redirect'));
         return Socialite::driver('facebook')->redirect();
     }
 
