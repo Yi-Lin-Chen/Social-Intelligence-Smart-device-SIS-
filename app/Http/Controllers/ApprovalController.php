@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\RequestModel;
 use App\Http\Requests;
 use App\Access;
+use Mail;
 
 class ApprovalController extends Controller
 {
@@ -37,6 +38,8 @@ class ApprovalController extends Controller
                 'expire_day' => 1,
                 'user_id'    => $req->user_id
             ]);
+
+            Mail::to($acc->user()->first())->send(new \App\Mail\NotifyUserWithQRCode($acc));
         }
 
         // Create a Request record for the user

@@ -31,8 +31,8 @@ class Access extends Model
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
-    public function qr_code() {
-        return 'https://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chl=' . $this->qr_code;
+    public function qr_code($size = '200') {
+        return 'https://chart.googleapis.com/chart?chs='.$size.'x'.$size.'&cht=qr&choe=UTF-8&chl=' . $this->qr_code;
     }
 
     public function getActualExpireTime() {
