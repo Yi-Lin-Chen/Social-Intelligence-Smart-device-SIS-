@@ -32,23 +32,32 @@ class HomeController extends Controller
 
     public function door($query)
     {
-        $client = new \GuzzleHttp\Client();
+        if( env('DOOR_SERVER_DRY_RUN') == false )  {
 
-        try {
-            $res = $client->request('GET', env('DOOR_SERVER_URL') . $query);
-        } catch (Exception $e) {
-            return ['status' => $e->getMessage()];
-        }
+            $client = new \GuzzleHttp\Client();
 
-        if( $res->getStatusCode() != 200 ) {
-            return ['status' => $res->getStatusCode()];
-        }
+            $request = new \GuzzleHttp\Psr7\Request('GET', env('DOOR_SERVER_URL') . $query);
 
-        if( $query == 'photo') {
-            return Response::make($res->getBody(), 200, ['Content-Type' => 'image/jpeg']);
-            //return response($res->getBody())->header('Content-Type', 'text/jpeg');
+            $promise = $client->sendAsync($request)->then(function ($response) {
+
+                if( $res->getStatusCode() != 200 ) {
+                    return ['status' => $res->getStatusCode()];
+                }
+
+                if( $query == 'photo') {
+                    return Response::make($res->getBody(), 200, ['Content-Type' => 'image/jpeg']);
+                }
+                else {
+                    return $res->getBody();
+                }
+            });
+
+            $promise->wait();
+
+        } else {
+
+            abort(500);
+
         }
-        else
-            return $res->getBody();
     }
 }
