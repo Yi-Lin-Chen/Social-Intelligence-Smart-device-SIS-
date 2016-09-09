@@ -48,7 +48,11 @@ class ApprovalController extends Controller
 
     public function deny($id) {
 
-        RequestModel::where('id', $id)->update(['state' => 'deny']);
+        $m   = RequestModel::where('id', $id);
+        $req = $m->update(['state' => 'deny']);
+        $r   = $m->first();
+
+        Mail::to($r->user()->first())->send(new \App\Mail\NotifyUserDeny($r->user()->first()));
 
         return redirect('/approval');
     }
