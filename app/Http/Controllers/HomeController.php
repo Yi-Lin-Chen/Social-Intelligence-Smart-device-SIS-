@@ -35,29 +35,24 @@ class HomeController extends Controller
         if( env('DOOR_SERVER_DRY_RUN') == false )  {
 
             $client = new \GuzzleHttp\Client();
-
-            $request = new \GuzzleHttp\Psr7\Request('GET', env('DOOR_SERVER_URL') . $query);
-
-            $promise = $client->sendAsync($request)->then(function ($response) {
-
-                if( $response->getStatusCode() != 200 ) {
-                    return ['status' => $response->getStatusCode()];
-                }
-
-                if( $query == 'photo') {
-                    return Response::make($response->getBody(), 200, ['Content-Type' => 'image/jpeg']);
-                }
-                else {
-                    return $response->getBody();
-                }
-            });
-
-            $promise->wait();
-
-        } else {
-
+            try {
+                $res = $client->request('GET', env('DOOR_SERVER_URL') . $query);
+            } catch (Exception $e) {
+                return ['status' => $e->getMessage()];
+            }
+            if( $res->getStatusCode() != 200 ) {
+                return ['status' => $res->getStatusCode()];
+            }
+            if( $query == 'photo') {
+                return Response::make($res->getBody(), 200, ['Content-Type' => 'image/jpeg']);
+            }
+            else {
+                return $res->getBody();
+            }
+        }
+        else {
+            Log::debug('Door server api dry run mode');
             abort(500);
-
         }
     }
 }
