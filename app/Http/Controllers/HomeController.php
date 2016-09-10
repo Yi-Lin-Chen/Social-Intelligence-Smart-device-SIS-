@@ -40,15 +40,15 @@ class HomeController extends Controller
 
             $promise = $client->sendAsync($request)->then(function ($response) {
 
-                if( $res->getStatusCode() != 200 ) {
-                    return ['status' => $res->getStatusCode()];
+                if( $response->getStatusCode() != 200 ) {
+                    return ['status' => $response->getStatusCode()];
                 }
 
                 if( $query == 'photo') {
-                    return Response::make($res->getBody(), 200, ['Content-Type' => 'image/jpeg']);
+                    return Response::make($response->getBody(), 200, ['Content-Type' => 'image/jpeg']);
                 }
                 else {
-                    return $res->getBody();
+                    return $response->getBody();
                 }
             });
 
