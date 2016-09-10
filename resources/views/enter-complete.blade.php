@@ -27,7 +27,13 @@
                 @foreach($data as $access)
                     @if( !$access->isExpired() )
                     <div class="panel panel-default">
-                        <div class="panel-heading">Access will expire at {{ $access->getActualExpireTime() }}</div>
+                        <div class="panel-heading">Access will expire at
+                            @if( $access->getActualExpireTime() == null )
+                            (Never)
+                            @else
+                            {{ $access->getActualExpireTime() }}
+                            @endif
+                        </div>
                         <div class="panel-body">
                             <img src="{{ $access->qr_code('300') }}" alt="QR" />
                         </div>
