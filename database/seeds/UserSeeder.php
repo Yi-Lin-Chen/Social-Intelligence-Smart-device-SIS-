@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name'     => '管理員',
+            'name'     => '顏敬柏',
             'email'    => 'jeremy5189@gmail.com',
             'password' => Hash::make('password'),
             'phone'    => '0912000111',
@@ -31,11 +31,11 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name'     => '使用者A',
+            'name'     => '林美馨',
             'email'    => 'ear120ear120@gmail.com',
             'password' => Hash::make('password'),
             'phone'    => '0912000111',
-            'level'    => 0,
+            'level'    => 1,
             'fb_id'    => 'null'
         ]);
     }
