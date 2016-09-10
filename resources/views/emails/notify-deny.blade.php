@@ -4,5 +4,5 @@ Your request to enter the room was DENIED by the manager. If you consider this a
 <br/>
 <br/>
 {{ $time }}<br/>
-{{ config('app.name') }}
+{{ config('app.name') }}<br/>
 {{ config('app.url') }}

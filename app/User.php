@@ -29,7 +29,7 @@ class User extends Authenticatable
 
     public function fb_avatar($size = 1) {
 
-        if( $this->fb_id == null ) {
+        if( $this->fb_id == null || $this->fb_id == 'null' ) {
 
             $size = $size * 50;
 

@@ -11,5 +11,5 @@ day, please present the following QR Code to the scanner.<br/>
 <img src="{{ $access->qr_code('400') }}" alt="QR Code" />
 <br/>
 {{ $time }}<br/>
-{{ config('app.name') }}
+{{ config('app.name') }}<br/>
 {{ config('app.url') }}
