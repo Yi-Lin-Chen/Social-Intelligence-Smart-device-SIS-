@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Access')
+
 @section('styles')
 <style media="screen">
     .table td,

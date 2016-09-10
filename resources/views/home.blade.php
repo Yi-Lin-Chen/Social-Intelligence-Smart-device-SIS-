@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Home')
+
 @section('styles')
 <style media="screen">
     .door-photo {

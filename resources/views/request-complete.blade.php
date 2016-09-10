@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Request Complete')
+
 @section('styles')
 <style media="screen">
 
@@ -22,7 +24,7 @@
                     Your request has been sent to the manager, please wait for response or call the manager, thank you.
                     <br>
                     <br>
-                    
+
                     <a href="/" class="btn btn-primary">Back to home</a>
                 </div>
             </div>

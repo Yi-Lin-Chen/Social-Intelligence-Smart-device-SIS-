@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Request')
+
 @section('styles')
 <style media="screen">
 
@@ -7,6 +9,7 @@
 @endsection
 
 @section('scripts')
+
 
 @endsection
 

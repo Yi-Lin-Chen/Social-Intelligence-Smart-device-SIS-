@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Enter Complete')
+
 @section('styles')
 <style media="screen">
 .panel {

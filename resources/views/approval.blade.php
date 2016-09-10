@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Approval')
+
 @section('styles')
 <style media="screen">
 .wrapper {

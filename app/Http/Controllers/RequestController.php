@@ -61,7 +61,7 @@ class RequestController extends Controller
             Log::info($check);
 
             // Insert fb_id if null
-            if( $check->fb_id == null ) {
+            if( $check->fb_id == null || $check->fb_id == 'null') {
                 $check->fb_id = $obj->user['id'];
                 $check->save();
             }

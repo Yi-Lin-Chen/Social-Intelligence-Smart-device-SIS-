@@ -1,8 +1,11 @@
 @extends('layouts.app')
 
+@section('title', 'User')
+
 @section('styles')
 
 @endsection
+
 
 @section('script')
 <script>
