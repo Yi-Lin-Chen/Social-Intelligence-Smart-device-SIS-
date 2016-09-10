@@ -36,6 +36,58 @@ $(function() {
         });
     });
 
+    $(document).on('click' , '.btn-update' , function(){
+        var access = $(this).data('access');
+        console.log('btn-update click, access data = ' + access.id + user(access.user_id));
+
+        {{--bootbox.dialog({--}}
+                    {{--title: "You are updating " + access.name,--}}
+                    {{--message:--}}
+                    {{--'<div class="row">  ' +--}}
+                    {{--'<div class="col-md-12"> ' +--}}
+                    {{--'<form class="form-horizontal" id="form" method="post" action="/user/update/' + user.id + '">' +--}}
+                    {{--'{{ csrf_field() }}' +--}}
+                    {{--'<div class="col-md-6 update-from" style="padding-right: 30px;">' +--}}
+                    {{--'<div class="form-group"> ' +--}}
+                    {{--'<label for="name">Name</label> ' +--}}
+                    {{--'<input id="name" name="name" type="text" placeholder="Name" class="form-control input-md" value="' + user.name + '"> ' +--}}
+                    {{--'</div> ' +--}}
+                    {{--'<div class="form-group"> ' +--}}
+                    {{--'<label for="level">Level</label> ' +--}}
+                    {{--'<select name="level" id="level" class="form-control">' +--}}
+                    {{--'<option value="0">User</option>' +--}}
+                    {{--'<option value="1">Manager</option>' +--}}
+                    {{--'</select>' +--}}
+                    {{--'</div>' +--}}
+                    {{--'<div class="form-group">' +--}}
+                    {{--'<label for="email">Email address</label>' +--}}
+                    {{--'<input type="email" class="form-control" name="email" id="email" placeholder="Email" value="' + user.email + '" disabled>' +--}}
+                    {{--'</div>' +--}}
+                    {{--'</div>' +--}}
+                    {{--'<div class="col-md-6 update-from" style="padding-left: 30px;">' +--}}
+                    {{--'<div class="form-group"> ' +--}}
+                    {{--'<label for="phone">Phone</label> ' +--}}
+                    {{--'<input id="phone" name="phone" type="text" placeholder="Phone (EX: 0912000111)" class="form-control input-md" value="' + user.phone + '">' +--}}
+                    {{--'</div> ' +--}}
+                    {{--'<div class="form-group"> ' +--}}
+                    {{--'<label for="password">New password</label> ' +--}}
+                    {{--'<input type="password" class="form-control" name="password" id="password" placeholder="New Password">' +--}}
+                    {{--'</div>' +--}}
+                    {{--'<div class="form-group"> ' +--}}
+                    {{--'<label for="password_confirmation">New Password</label> ' +--}}
+                    {{--'<input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm New Password">' +--}}
+                    {{--'</div>' +--}}
+                    {{--'</div>' +--}}
+
+                    {{--'<button type="submit" class="btn btn-default">Update</button>' +--}}
+                    {{--'</form>' +--}}
+                    {{--'</div>' +--}}
+                    {{--'</div>'--}}
+                {{--}--}}
+        {{--);--}}
+    });
+
+
     $(document).on('click' , '.btn-delete' , function(){
         var id = $(this).data('id');
         console.log('btn-delete click, id = ' + id);
@@ -115,7 +167,7 @@ $(function() {
                                         <button data-access-id="{{ $access->id }}" class="btn btn-default btn-xs notify-user"><span class="glyphicon glyphicon-inbox"></span></button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
+                                        <button data-access="{{ $access }}" class="btn btn-primary btn-xs btn-update"><span class="glyphicon glyphicon-edit"></span></button>
                                     </td>
                                     <td>
                                         <button data-id="{{ $access->id }}"  class="btn btn-danger btn-xs btn-delete"><span class="glyphicon glyphicon-remove"></span></button>

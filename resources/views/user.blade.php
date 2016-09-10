@@ -38,7 +38,7 @@ $(function() {
     $(document).on('click' , '.btn-update' , function(){
 
         var user =$(this).data('user');
-        //console.log('btn-update click, user data = ' + user);
+        console.log('btn-update click, user data = ' + user);
 
         bootbox.dialog({
                     title: "You are updating " + user.name,
