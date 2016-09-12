@@ -113,7 +113,30 @@ class AccessController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'expire_day' => 'integer',
+            'qr_code'    => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/access')
+                ->withErrors($validator)
+                ->withInput(); // Request::old('field')
+        }
+
+        $input = $request->all();
+        unset($input['_token']);
+        if ( $input['expire_day'] == null ){
+            unset($input['expire_day']);
+        }
+        if ( $input['qr_code'] == '1') {
+            $input['qr_code'] = sha1(uniqid());
+        }else{
+            unset($input['qr_code']);
+        }
+
+        Access::where('id' , '=' , $id)->update($input);
+        return redirect('/access')->with('status', 'Access updated.');
     }
 
     /**
