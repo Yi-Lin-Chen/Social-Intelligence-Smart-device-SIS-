@@ -45,11 +45,10 @@ $(function() {
                     title: "You are updating access id " + access.id + " " + access_username +"'s access." ,
                     message:
                     '<div class="row">  ' +
-                        '<div class="col-md-12"> ' +
+                        '<div class="col-md-10 col-md-offset-1"> ' +
                             '<form class="form-horizontal" id="form" method="post" action="/access/update/' + access.id + '">' +
                             '{{ csrf_field() }}' +
-                            '<div class="col-md-12 update-from" style="padding-right: 30px;">' +
-                                '<div class="form-group">' +
+                            '<div class="form-group">' +
                                 '<label for="expire_day">Expire Day</label>' +
                                 '<input type="text" class="form-control" name="expire_day" id="expire_day" placeholder="Expire Day" value="' + access.expire_day + '">' +
                             '</div>' +
@@ -60,10 +59,11 @@ $(function() {
                                 '<option value="1">Yes.</option>' +
                                 '</select>' +
                             '</div>' +
-
+                            '<div class="form-group">' +
 
 
                             '<button type="submit" class="btn btn-default">Update</button>' +
+                            '</div>' +
                             '</form>' +
                         '</div>' +
                     '</div>'
