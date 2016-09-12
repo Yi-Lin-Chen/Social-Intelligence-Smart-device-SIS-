@@ -140,7 +140,7 @@ $(function() {
                             @foreach( $access_array as $access )
                                 <tr>
                                     <td>{{ $access->id }}</td>
-                                    <td>#{{ $access->id }} {{ $access->user()->first()->name }}</td>
+                                    <td>#{{ $access->user()->first()->id }} {{ $access->user()->first()->name }}</td>
                                     <td>
                                         @if( $access->expire_day == 0 )
                                             Never
