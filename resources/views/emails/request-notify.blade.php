@@ -5,5 +5,5 @@ Dear Manager,
 {{ config('app.url') }}/approval/{{ $req_id }}
 
 {{ $time }}
-{{ config('app.name') }}<br/>
+{{ config('app.name') }}
 {{ config('app.url') }}
