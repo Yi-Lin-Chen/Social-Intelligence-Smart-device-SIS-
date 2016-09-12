@@ -55,9 +55,8 @@ $(function() {
                             '<div class="form-group">' +
                                 '<label for="qr_code">Do you want reset QRcode?</label>' +
                                 '<select name="qr_code" id="qr_code" class="form-control">' +
-                                '<option value="null">Please select</option>' +
-                                '<option value="1">Yes.</option>' +
                                 '<option value="2">No.</option>' +
+                                '<option value="1">Yes.</option>' +
                                 '</select>' +
                             '</div>' +
                             '<div class="form-group">' +
