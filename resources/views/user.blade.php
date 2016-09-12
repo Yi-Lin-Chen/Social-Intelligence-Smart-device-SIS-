@@ -39,6 +39,9 @@ $(function() {
 
         var user =$(this).data('user');
         console.log('btn-update click, user data = ' + user);
+        setTimeout(function() {
+            $('#level-update option[value="' + user.level + '"]').attr('selected', 'selected');
+        }, 200);
 
         bootbox.dialog({
                     title: "You are updating " + user.name,
@@ -54,7 +57,7 @@ $(function() {
                                     '</div> ' +
                                     '<div class="form-group"> ' +
                                         '<label for="level">Level</label> ' +
-                                            '<select name="level" id="level" class="form-control">' +
+                                            '<select name="level" id="level-update" class="form-control">' +
                                                 '<option value="0">User</option>' +
                                                 '<option value="1">Manager</option>' +
                                             '</select>' +

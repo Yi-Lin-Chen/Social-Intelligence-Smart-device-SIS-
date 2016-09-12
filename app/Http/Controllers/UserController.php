@@ -106,11 +106,9 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
 
-
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'level' => 'required|integer',
-            'phone' => 'required',
             'password' => 'confirmed',
         ]);
 
@@ -125,7 +123,7 @@ class UserController extends Controller
         unset($input['password_confirmation']);
 
         if ($input['password'] == null){
-            unset($input['poassword']);
+            unset($input['password']);
         }else{
             $input['password'] = Hash::make($input['password']);
         }
