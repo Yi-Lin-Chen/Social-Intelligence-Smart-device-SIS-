@@ -70,4 +70,9 @@ class ApprovalController extends Controller
             'user'    => $req->user()->first()
         ]);
     }
+
+    public function destroy($id){
+        return RequestModel::destroy($id);
+    }
+
 }

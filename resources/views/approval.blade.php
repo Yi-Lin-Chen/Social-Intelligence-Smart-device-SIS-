@@ -12,7 +12,8 @@
     margin-top: 20px;
     margin-bottom: 30px;
 }
-.btn {
+.btn-enter,
+.btn-delete{
     width: 100%;
 }
 .btn-col {
@@ -20,19 +21,45 @@
     text-align: center;
     margin-top: 10px;
 }
+.table-list td{
+    vertical-align:middle !important;
+}
 </style>
 @endsection
 
-@section('scripts')
+@section('script')
 <script>
-$(function(){
-    $('#deny-btn').click(function() {
-        bootbox.dialog({
-            title: "Pick a denail reason",
-            message: ''
+    $(function(){
+        $('#deny-btn').click(function() {
+            bootbox.dialog({
+                title: "Pick a denail reason",
+                message: ''
+            });
+        });
+
+        $(document).on('click' , '.btn-delete' , function(){
+            var id = $(this).data('id');
+            console.log('btn-delete click, id = ' + id);
+
+        bootbox.confirm('Do you really want to delete user #' + id + '?', function(ret) {
+            if(ret) {
+                $.ajax({
+                    url: '/approval/' + id,
+                    method: 'DELETE',
+                    data: {
+                        _token: window.Laravel.csrfToken
+                    }
+                }).done(function(resp) {
+                    console.log(resp);
+                    location.href = '/approval';
+                }).fail(function(resp) {
+                    bootbox.alert('Delete approval fail!');
+                    console.error(resp);
+                });
+            }
+        });
         });
     });
-});
 </script>
 @endsection
 
@@ -53,7 +80,7 @@ $(function(){
             <div class="panel panel-default">
                 <div class="panel-heading">Pending User Request</div>
                 <div class="panel-body">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-list">
                         <thead>
                             <tr>
                                 <th>Avatar</th>
@@ -73,8 +100,8 @@ $(function(){
                                 <td>{{ $item->user()->first()->name }}</td>
                                 <td>{{ $item->created_at }}</td>
                                 <td>{{ $item->state }}</td>
-                                <td><button class="btn btn-danger btn-xs">Delete</button></td>
-                                <td><a href="/approval/{{ $item->id }}" class="btn btn-primary btn-xs">Enter</button></td>
+                                <td><button data-id="{{ $item->id }}" class="btn btn-danger btn-xs btn-delete">Delete</button></td>
+                                <td><a href="/approval/{{ $item->id }}" class="btn btn-primary btn-xs btn-enter">Enter</a></td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -108,10 +135,10 @@ $(function(){
 
                 <div class="row custom-row">
                     <div class="col-md-6 btn-col">
-                        <a href="/approval/grant/{{ $request->id }}" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Approve</a>
+                        <a href="/approval/grant/{{ $request->id }}" class="btn btn-primary btn-enter"><span class="glyphicon glyphicon-ok"></span> Approve</a>
                     </div>
                     <div class="col-md-6 btn-col">
-                        <a href="/approval/deny/{{ $request->id }}" id="deny-btn" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Deny</a>
+                        <a href="/approval/deny/{{ $request->id }}" id="deny-btn" class="btn btn-danger btn-enter"><span class="glyphicon glyphicon-remove"></span> Deny</a>
                     </div>
                 </div>
 
