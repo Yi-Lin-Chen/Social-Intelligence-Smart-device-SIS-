@@ -17,7 +17,7 @@ Code to control the smart lock and QR code reader.
 
 # Install
 
-composer install
-cp .env.example .env
-php artisan migrate --seed
+	composer install
+	cp .env.example .env
+	php artisan migrate --seed
 
