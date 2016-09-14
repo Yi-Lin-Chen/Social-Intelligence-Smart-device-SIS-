@@ -20,8 +20,9 @@ $(function() {
             if(ret) {
                 $.ajax({
                     url: '/user/' + id,
-                    method: 'DELETE',
+                    type: 'post',
                     data: {
+                        _method:"DELETE" ,
                         _token: window.Laravel.csrfToken
                     }
                 }).done(function(resp) {
@@ -33,6 +34,7 @@ $(function() {
                 });
             }
         });
+        //console.log('post succee');
     });
 
     $(document).on('click' , '.btn-update' , function(){
@@ -147,27 +149,32 @@ $(function() {
                         </thead>
                         <tbody>
                             @foreach( $users as $user )
-                                <tr>
-                                    <td>{{ $user->id }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->phone }}</td>
-                                    <td>
-                                        @if( $user->level == 1 )
-                                            Manager
-                                        @else
-                                            User
-                                        @endif
-                                    </td>
-                                    <td>{{ $user->created_at }}</td>
-                                    <td>{{ $user->updated_at }}</td>
-                                    <td>
-                                        <button data-user="{{ $user }}" class="btn btn-primary btn-xs btn-update"><span class="glyphicon glyphicon-edit"></span></button>
-                                    </td>
-                                    <td>
-                                        <button data-id="{{ $user->id }}" class="btn btn-danger btn-xs btn-delete"><span class="glyphicon glyphicon-remove"></span></button>
-                                    </td>
-                                </tr>
+
+                                @if( $user->is_deleted == true )
+
+                                @else
+                                    <tr>
+                                        <td>{{ $user->id }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->phone }}</td>
+                                        <td>
+                                            @if( $user->level == 1 )
+                                                Manager
+                                            @else
+                                                User
+                                            @endif
+                                        </td>
+                                        <td>{{ $user->created_at }}</td>
+                                        <td>{{ $user->updated_at }}</td>
+                                        <td>
+                                            <button data-user="{{ $user }}" class="btn btn-primary btn-xs btn-update"><span class="glyphicon glyphicon-edit"></span></button>
+                                        </td>
+                                        <td>
+                                            <button data-id="{{ $user->id }}" class="btn btn-danger btn-xs btn-delete"><span class="glyphicon glyphicon-remove"></span></button>
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

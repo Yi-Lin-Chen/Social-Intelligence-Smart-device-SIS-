@@ -96,7 +96,13 @@
                             @foreach( $request as $item )
                             <tr>
                                 <td><img src="{{ $item->user()->first()->fb_avatar(1) }}" alt="FB Avatar"></td>
-                                <td>{{ $item->user_id }}</td>
+                                <td>
+                                    @if( $item->user()->first()->is_deleted == true )
+                                        {{ $item->user_id }} (deleted)
+                                    @else
+                                        {{ $item->user_id }}
+                                    @endif
+                                </td>
                                 <td>{{ $item->user()->first()->name }}</td>
                                 <td>{{ $item->created_at }}</td>
                                 <td>{{ $item->state }}</td>

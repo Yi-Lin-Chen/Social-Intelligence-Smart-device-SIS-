@@ -142,10 +142,12 @@ class UserController extends Controller
     {
         if ( $id == 1 ){
             abort(403);
-
+            redirect('/user');
         } else {
             Log::debug('Going to delete id = ' . $id);
-            return User::destroy($id);
+            User::where('id' , '=' , $id)->update(['is_deleted' => true]);
+            Log::debug('delete id = ' . $id);
+            redirect('/user');
         }
 
     }
