@@ -17,10 +17,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// New Facebook Login Route
+// Sensor Control Route
+Route::get('/sensor', 'SensorController@index');
+
+// Facebook Login Route
 Route::get('/auth/facebook/redirect', 'Auth\LoginController@redirectToFacebook');
 Route::get('/auth/facebook/callback', 'Auth\LoginController@handleProviderCallback');
 
+// Dashboard, display QR
 Route::get('/dashboard', 'DashboardController@index');
 
 // Facebook Login Route
@@ -38,11 +42,13 @@ Route::delete('/approval/{id}' , 'ApprovalController@destroy');
 Route::get('/home' , 'HomeController@index');
 Route::get('/home/door/{query}' , 'HomeController@door');
 
+// Manage User
 Route::get('/user' , 'UserController@index');
 Route::post('/user/update/{id}' , 'UserController@update');
 Route::post('/user' , 'UserController@store');
 Route::delete('/user/{id}' , 'UserController@destroy');
 
+// Manage Access
 Route::get('/access' , 'AccessController@index');
 Route::post('/access/update/{id}' , 'AccessController@update');
 Route::post('/access' , 'AccessController@store');
