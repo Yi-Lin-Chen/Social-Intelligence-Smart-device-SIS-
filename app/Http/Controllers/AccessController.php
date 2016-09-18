@@ -19,7 +19,10 @@ class AccessController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware([
+            'auth',
+            'auth.admin'
+        ]);
     }
 
     public function notify($id) {

@@ -17,17 +17,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// Enter
-// 讓雷包取回自己所有的 QR Code，限 FB 認證免登入
-Route::get('/enter' , 'EnterController@index');
-Route::get('/enter/redirect', 'EnterController@redirect');
-Route::get('/enter/callback', 'EnterController@callback');
+// New Facebook Login Route
+Route::get('/auth/facebook/redirect', 'Auth\LoginController@redirectToFacebook');
+Route::get('/auth/facebook/callback', 'Auth\LoginController@handleProviderCallback');
 
+Route::get('/dashboard', 'DashboardController@index');
 
 // Facebook Login Route
 Route::get('/request', 'RequestController@request');
-Route::get('/request/redirect', 'RequestController@redirect');
-Route::get('/request/callback', 'RequestController@callback');
+Route::get('/request/send', 'RequestController@send');
 
 // Manager Approval
 Route::get('/approval', 'ApprovalController@list');
@@ -49,5 +47,4 @@ Route::get('/access' , 'AccessController@index');
 Route::post('/access/update/{id}' , 'AccessController@update');
 Route::post('/access' , 'AccessController@store');
 Route::delete('/access/{id}' , 'AccessController@destroy');
-
 Route::get('/access/notify/{id}' , 'AccessController@notify');

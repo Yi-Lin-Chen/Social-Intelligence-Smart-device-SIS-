@@ -119,11 +119,6 @@ var updateStatusBtn = function(text, btn_class) {
                         </thead>
                         <tbody>
                             @foreach( $records as $record )
-                            @if( $record->error_code == 200 )
-                            <tr class="success">
-                            @else
-                            <tr>
-                            @endif
                                 <td>{{ $record->id }}</td>
                                 <td>{{ $record->created_at }}</td>
                                 <td>{{ $record->ip }}</td>

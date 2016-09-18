@@ -21,9 +21,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Request Permission from the room manager</div>
                 <div class="panel-body">
-                    <a href="/request/redirect" class="btn btn-block btn-social btn-facebook">
-                       <span class="fa fa-facebook"></span> Sign in with Facebook
-                     </a>
+                    <a href="/request/send" class="btn btn-danger btn-block">
+                        Send your request to the manager
+                    </a>
                 </div>
             </div>
         </div>
