@@ -65,6 +65,10 @@ class RequestController extends Controller
                 $check->fb_id = $obj->user['id'];
                 $check->save();
             }
+            if( $check->is_delete == true){
+                $check->is_delete = false;
+                $check->save();
+            }
 
         }
 
