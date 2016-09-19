@@ -21,23 +21,25 @@
 
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            @if( $status == false || $data == null )
+            @if( $data == '[]' )
                 <div class="alert alert-danger">You have no active access, please <a href="/request">request</a> for a access first.</div>
             @else
                 @foreach($data as $access)
                     @if( !$access->isExpired() )
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Access will expire at
-                            @if( $access->getActualExpireTime() == null )
-                            (Never)
-                            @else
-                            {{ $access->getActualExpireTime() }}
-                            @endif
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Access will expire at
+                                @if( $access->getActualExpireTime() == null )
+                                (Never)
+                                @else
+                                {{ $access->getActualExpireTime() }}
+                                @endif
+                            </div>
+                            <div class="panel-body">
+                                <img src="{{ $access->qr_code('300') }}" alt="QR" />
+                            </div>
                         </div>
-                        <div class="panel-body">
-                            <img src="{{ $access->qr_code('300') }}" alt="QR" />
-                        </div>
-                    </div>
+                    @else
+                        <div class="alert alert-danger">Your access is expired, please <a href="/request">request</a> for a access first.</div>
                     @endif
                 @endforeach
             @endif

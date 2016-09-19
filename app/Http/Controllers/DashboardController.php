@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Access;
 use Auth;
+use Log;
 
 class DashboardController extends Controller
 {
@@ -26,7 +27,6 @@ class DashboardController extends Controller
     {
         return view('dashboard', [
             'data'   => Access::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get(),
-            'status' => true
         ]);
     }
 }

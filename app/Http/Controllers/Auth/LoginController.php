@@ -83,6 +83,11 @@ class LoginController extends Controller
                 $check->save();
             }
 
+            if( $check->is_delete == true){
+                $check->is_delete = false;
+                $check->save();
+            }
+
         }
 
         Auth::login($check);

@@ -138,13 +138,7 @@ $(function() {
                         <tbody>
                             @foreach( $access_array as $access )
                                 <tr>
-                                    <td>
-                                        @if( $access->user()->first()->is_deleted == true )
-                                            {{ $access->id }} (deleted)
-                                        @else
-                                            {{ $access->id }}
-                                        @endif
-                                    </td>
+                                    <td>{{ $access->id }}</td>
                                     <td>#{{ $access->user()->first()->id }} {{ $access->user()->first()->name }}</td>
                                     <td>
                                         @if( $access->expire_day == 0 )

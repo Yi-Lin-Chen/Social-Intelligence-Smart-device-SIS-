@@ -34,6 +34,7 @@ class RequestController extends Controller
 
     public function send(Request $request)
     {
+
         $check = Auth::user();
 
         // 存入 Request 紀錄
