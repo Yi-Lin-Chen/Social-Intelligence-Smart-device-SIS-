@@ -24,21 +24,23 @@ class QueryController extends Controller
         return sha1('GoodWeb' . $qr_code) == $checksum;
     }
 
-    private function record($ip, $error_code, $note, $access_id = null)
+    private function record($photo_ts, $ip, $error_code, $note, $access_id = null)
     {
         Record::create([
             'ip'         => $ip,
             'error_code' => $error_code,
             'note'       => $note,
-            'access_id'  => $access_id
+            'access_id'  => $access_id,
+            'photo_ts'   => $photo_ts
         ]);
     }
 
     public function query(Request $request)
     {
-        $qr_code = $request->input('qr_code');
-        $checksum = $request->input('checksum');
-        $status = true;
+        $qr_code    = $request->input('qr_code');
+        $checksum   = $request->input('checksum');
+        $photo_ts   = $request->input('photo_ts');
+        $status     = true;
         $error_code = 200;
 
         if( !$this->checkSum($qr_code, $checksum) ) {
@@ -48,7 +50,7 @@ class QueryController extends Controller
             $error_code = 400;
 
             // 紀錄 IP, note = qr_code, access_id = null
-            $this->record($request->ip(), $error_code, $qr_code);
+            $this->record($photo_ts, $request->ip(), $error_code, $qr_code);
 
         } else {
 
@@ -62,7 +64,7 @@ class QueryController extends Controller
                 $error_code = 404;
 
                 // 紀錄 IP, note = qr_code, access_id = null
-                $this->record($request->ip(), $error_code, $qr_code);
+                $this->record($photo_ts, $request->ip(), $error_code, $qr_code);
 
             } else {
 
@@ -75,10 +77,13 @@ class QueryController extends Controller
                     $error_code = 403;
 
                     // 紀錄 IP, note = qr_code, access_id = null, access id
-                    $this->record($request->ip(), $error_code, $qr_code, $query->id);
+                    $this->record($photo_ts, $request->ip(), $error_code, $qr_code, $query->id);
+
                 } else {
+
                     // Success
                     $this->record($request->ip(), $error_code, $qr_code, $query->id);
+
                 }
             }
         }

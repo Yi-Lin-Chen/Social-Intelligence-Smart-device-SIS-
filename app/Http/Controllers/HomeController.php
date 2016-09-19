@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Response;
 use App\Record;
+use Log;
 
 class HomeController extends Controller
 {
@@ -15,7 +16,10 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware([
+            'auth',
+            'auth.admin'
+        ]);
     }
 
     /**
@@ -30,13 +34,23 @@ class HomeController extends Controller
         ]);
     }
 
-    public function door($query)
+    public function door($query, Request $request)
     {
+        $query_map = [
+            'unlock' => 'lock/'  . $query,
+            'lock'   => 'lock/'  . $query,
+            'status' => 'lock/'  . $query,
+            'photo'  => 'photo/' . $query,
+            'record' => 'photo/' . $query . '?ts=' . $request->input('ts')
+        ];
+
+        Log::debug('Door query: '. $query . ' map to: ' . $query_map[$query]);
+
         if( env('DOOR_SERVER_DRY_RUN') == false )  {
 
             $client = new \GuzzleHttp\Client();
             try {
-                $res = $client->request('GET', env('DOOR_SERVER_URL') . $query);
+                $res = $client->request('GET', env('DOOR_SERVER_URL') . $query_map[$query]);
             } catch (Exception $e) {
                 return ['status' => $e->getMessage()];
             }
@@ -52,7 +66,7 @@ class HomeController extends Controller
         }
         else {
             Log::debug('Door server api dry run mode');
-            abort(500);
+            //abort(500);
         }
     }
 }

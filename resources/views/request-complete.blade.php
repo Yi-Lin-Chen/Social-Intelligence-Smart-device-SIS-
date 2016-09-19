@@ -25,7 +25,7 @@
                     <br>
                     <br>
 
-                    <a href="/" class="btn btn-primary">Back to home</a>
+                    <a href="/dashboard" class="btn btn-primary">Back to home</a>
                 </div>
             </div>
         </div>

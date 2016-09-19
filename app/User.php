@@ -27,6 +27,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function isManager() {
+        return $this->level;
+    }
+
     public function fb_avatar($size = 1) {
 
         if( $this->fb_id == null || $this->fb_id == 'null' ) {

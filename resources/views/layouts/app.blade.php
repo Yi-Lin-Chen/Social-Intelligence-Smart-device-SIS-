@@ -76,20 +76,34 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ url('/enter') }}">Enter</a></li>
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/request') }}">Request</a></li>
                     @else
-                        <li><a href="/home">Home</a></li>
-                        <li><a href="/user">User</a></li>
-                        <li><a href="/access">Access</a></li>
-                        <li><a href="/approval">Approval</a></li>
+                        <li><a href="/dashboard">Dashboard</a></li>
+                        <li><a href="/sensor">Sensor Control</a></li>
+                        @if (Auth::user()->isManager())
+                            <li><a href="/home">Home Control</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    Manage <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="/user">User</a></li>
+                                    <li><a href="/access">Access</a></li>
+                                    <li><a href="/approval">Approval</a></li>
+                                </ul>
+                            <li>
+                        @else
+                            <li><a href="/request">Request Access</a></li>
+                        @endif
                         <li class="dropdown">
+
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+
                                 <li>
                                     <a href="{{ url('/logout') }}"
                                         onclick="event.preventDefault();

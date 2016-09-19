@@ -11,7 +11,10 @@ use Mail;
 class ApprovalController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth');
+        $this->middleware([
+            'auth',
+            'auth.admin'
+        ]);
     }
 
     public function list() {

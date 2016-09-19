@@ -21,6 +21,10 @@ $(function() {
         getStatus();
     });
 
+    $('.btn-record').click(function() {
+        bootbox.alert('<img src="/home/door/record?ts=' + $(this).data('ts') + '">');
+    });
+
     $('#door-photo').click(function() {
         var now = new Date();
         $('.col-big').append(
@@ -110,15 +114,11 @@ var updateStatusBtn = function(text, btn_class) {
                                 <th>IP</th>
                                 <th>Code</th>
                                 <th>Access Data</th>
+                                <th>Photo</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach( $records as $record )
-                            @if( $record->error_code == 200 )
-                            <tr class="success">
-                            @else
-                            <tr>
-                            @endif
                                 <td>{{ $record->id }}</td>
                                 <td>{{ $record->created_at }}</td>
                                 <td>{{ $record->ip }}</td>
@@ -129,6 +129,11 @@ var updateStatusBtn = function(text, btn_class) {
                                     @else
                                         Access #{{ $record->access_id }}<br/>
                                         User #{{ $record->access()->first()->user()->first()->id }} {{ $record->access()->first()->user()->first()->name }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if( $record->photo_ts != null )
+                                        <button class="btn btn-default btn-record" data-ts="{{ $record->photo_ts }}"><span class="glyphicon glyphicon-picture"></span></button>
                                     @endif
                                 </td>
                             </tr>
