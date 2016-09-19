@@ -82,7 +82,7 @@ class QueryController extends Controller
                 } else {
 
                     // Success
-                    $this->record($request->ip(), $error_code, $qr_code, $query->id);
+                    $this->record($photo_ts, $request->ip(), $error_code, $qr_code, $query->id);
 
                 }
             }

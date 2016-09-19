@@ -22,7 +22,10 @@ $(function() {
     });
 
     $('.btn-record').click(function() {
-        bootbox.alert('<img src="/home/door/record?ts=' + $(this).data('ts') + '">');
+        bootbox.alert({
+            size: 'large',
+            message: '<img src="/home/door/record?ts=' + $(this).data('ts') + '">'
+        });
     });
 
     $('#door-photo').click(function() {

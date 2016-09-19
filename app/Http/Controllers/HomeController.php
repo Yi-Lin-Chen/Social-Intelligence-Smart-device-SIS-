@@ -57,7 +57,7 @@ class HomeController extends Controller
             if( $res->getStatusCode() != 200 ) {
                 return ['status' => $res->getStatusCode()];
             }
-            if( $query == 'photo') {
+            if( $query == 'photo' || $query == 'record') {
                 return Response::make($res->getBody(), 200, ['Content-Type' => 'image/jpeg']);
             }
             else {

@@ -8,6 +8,7 @@ use Socialite;
 use Auth;
 use Log;
 use App\User;
+use Hash;
 
 class LoginController extends Controller
 {
