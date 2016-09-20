@@ -18,7 +18,6 @@
 
 @section('content')
 <div class="container">
-
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             @if( $data == '[]' )
@@ -38,10 +37,12 @@
                                 <img src="{{ $access->qr_code('300') }}" alt="QR" />
                             </div>
                         </div>
-                    @else
-                        <div class="alert alert-danger">Your access is expired, please <a href="/request">request</a> for a access first.</div>
+                        {{$all_expired = false}}
                     @endif
                 @endforeach
+                @if( $all_expired == true )
+                    <div class="alert alert-danger">Your access is expired, please <a href="/request">request</a> for a access first.</div>
+                @endif
             @endif
         </div>
     </div>

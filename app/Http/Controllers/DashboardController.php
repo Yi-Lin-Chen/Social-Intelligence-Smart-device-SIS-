@@ -26,7 +26,8 @@ class DashboardController extends Controller
     public function index()
     {
         return view('dashboard', [
-            'data'   => Access::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get(),
+            'data'        => Access::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get(),
+            'all_expired' => true
         ]);
     }
 }

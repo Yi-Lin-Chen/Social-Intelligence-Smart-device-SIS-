@@ -83,8 +83,8 @@ class LoginController extends Controller
                 $check->save();
             }
 
-            if( $check->is_delete == true){
-                $check->is_delete = false;
+            if( $check->is_deleted == true){
+                $check->is_deleted = false;
                 $check->save();
             }
 
