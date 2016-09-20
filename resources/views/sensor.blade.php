@@ -15,6 +15,27 @@
 <script>
 $(function () {
 
+    //var socket = io('ws://');
+    var ws = new WebSocket('ws://192.168.2.2:3000/sensortag/humidity');
+    ws.onmessage = function (event) {
+        var data = JSON.parse(event.data);
+        console.log(data);
+        var chart_temp = $('#chart-temp').highcharts();
+        var chart_humidity = $('#chart-humidity').highcharts();
+        if(chart_temp) {
+            var point = chart_temp.series[0].points[0];
+            point.update(roundDecimal(data.temperature, 2));
+        }
+        if(chart_humidity) {
+            var point = chart_humidity.series[0].points[0];
+            point.update(roundDecimal(data.humidity, 2));
+        }
+    };
+
+    var roundDecimal = function (val, precision) {
+        return Math.round(Math.round(val * Math.pow(10, (precision || 0) + 1)) / 10) / Math.pow(10, (precision || 0));
+    }
+
     var gaugeOptions = {
 
         chart: {
