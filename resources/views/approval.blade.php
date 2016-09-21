@@ -107,7 +107,13 @@
                                 <td>{{ $item->created_at }}</td>
                                 <td>{{ $item->state }}</td>
                                 <td><button data-id="{{ $item->id }}" class="btn btn-danger btn-xs btn-delete">Delete</button></td>
-                                <td><a href="/approval/{{ $item->id }}" class="btn btn-primary btn-xs btn-enter">Enter</a></td>
+                                <td>
+                                    @if( $item->state == 'pending')
+                                        <a href="/approval/{{ $item->id }}" class="btn btn-primary btn-xs btn-enter">Enter</a>
+                                    @else
+                                        <button class="btn btn-primary btn-xs btn-delete" disabled="disabled">Enter</button>
+                                    @endif
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

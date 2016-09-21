@@ -42,14 +42,16 @@ $(function() {
         console.log('btn-update click, access data = ' + access.id + access_username);
 
         bootbox.dialog({
-                    title: "You are updating access id " + access.id + " " + access_username +"'s access." ,
+                    title: "You are updating access  #" + access.id + " " + access_username +"'s access." ,
                     message:
                     '<div class="row">  ' +
                         '<div class="col-md-10 col-md-offset-1"> ' +
                             '<form class="form-horizontal" id="form" method="post" action="/access/update/' + access.id + '">' +
                             '{{ csrf_field() }}' +
                             '<div class="form-group">' +
+                                '<label>The access created at ' + access.created_at + '.</label><br><br>' +
                                 '<label for="expire_day">Expire Day</label>' +
+                                '<div>(The expired starting date is created date.)</div>' +
                                 '<input type="text" class="form-control" name="expire_day" id="expire_day" placeholder="Expire Day" value="' + access.expire_day + '">' +
                             '</div>' +
                             '<div class="form-group">' +
