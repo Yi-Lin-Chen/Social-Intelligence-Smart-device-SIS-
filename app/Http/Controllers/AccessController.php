@@ -66,16 +66,21 @@ class AccessController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'user_id'    => 'required|integer',
             'expire_day' => 'required|integer'
         ]);
-
         if ($validator->fails()) {
             return redirect('/access')
                         ->withErrors($validator)
                         ->withInput(); // Request::old('field')
+        }elseif ($request->input('expire_day') < 0 ){
+            return redirect('/access')
+                ->withErrors('Expire day must be positive integer.');
         }
+
+
 
         $input = $request->all();
         $input['qr_code'] = sha1(uniqid());
@@ -125,6 +130,9 @@ class AccessController extends Controller
             return redirect('/access')
                 ->withErrors($validator)
                 ->withInput(); // Request::old('field')
+        }elseif ($request->input('expire_day') < 0 ){
+            return redirect('/access')
+                ->withErrors('Expire day must be positive integer.');
         }
 
         $input = $request->all();
