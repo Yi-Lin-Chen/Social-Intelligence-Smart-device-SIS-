@@ -15,7 +15,7 @@
 <script>
 $(function () {
 
-    var info = new WebSocket('ws://192.168.2.2:3000/sensortag/info');
+    var info = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/info');
     info.onclose = function() {
         $('#dev-status').html('<span class="label label-danger">斷線</button>');
     }
@@ -37,7 +37,7 @@ $(function () {
         }
     };
 
-    var ws_temp_humid = new WebSocket('ws://192.168.2.2:3000/sensortag/humidity');
+    var ws_temp_humid = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/humidity');
     ws_temp_humid.onopen = function() {
         update_label('label-temp', true);
         update_label('label-humidity', true);
@@ -57,7 +57,7 @@ $(function () {
         update_chart('chart-humidity', data.humidity);
     };
 
-    var ws_bar = new WebSocket('ws://192.168.2.2:3000/sensortag/barometricPressure');
+    var ws_bar = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/barometricPressure');
     ws_bar.onopen = function() {
         update_label('label-bar', true);
     }
@@ -73,7 +73,7 @@ $(function () {
         update_chart('chart-bar', data.pressure);
     };
 
-    var ws_ir_temp = new WebSocket('ws://192.168.2.2:3000/sensortag/irTemperature');
+    var ws_ir_temp = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/irTemperature');
     ws_ir_temp.onopen = function() {
         update_label('label-irtemp', true);
         update_label('label-devtemp', true);

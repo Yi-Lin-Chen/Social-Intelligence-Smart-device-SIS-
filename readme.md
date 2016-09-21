@@ -17,6 +17,7 @@ Code to control the smart lock and QR code reader.
 
 # Install
 
+	sudo apt-get install php7.0 php7.0-mysql mysql-client mysql-server php-mbstring php-xml git vim zip unzip apache2 libapache2-mod-php7.0
 	composer install
 	cp .env.example .env
 	php artisan migrate --seed
