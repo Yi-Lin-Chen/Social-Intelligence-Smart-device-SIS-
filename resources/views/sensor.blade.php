@@ -15,6 +15,110 @@
 <script>
 $(function () {
 
+    var info = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/info');
+    info.onclose = function() {
+        $('#dev-status').html('<span class="label label-danger">斷線</button>');
+    }
+    info.onerror = function() {
+        $('#dev-status').html('<span class="label label-danger">斷線</button>');
+    }
+    info.onmessage = function (event) {
+        var obj = JSON.parse(event.data);
+        for( var key in obj ) {
+            if(key == 'status') {
+                if( obj[key] == 'connected')
+                    $('#dev-' + key).html('<span class="label label-success">已連接</span>');
+                else {
+                    $('#dev-' + key).html('<span class="label label-danger">斷線</button>');
+                }
+            }
+            else
+                $('#dev-' + key).html(obj[key]);
+        }
+    };
+
+    var ws_temp_humid = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/humidity');
+    ws_temp_humid.onopen = function() {
+        update_label('label-temp', true);
+        update_label('label-humidity', true);
+    }
+    ws_temp_humid.onclose = function() {
+        update_label('label-temp', false);
+        update_label('label-humidity', false);
+    }
+    ws_temp_humid.onerror = function() {
+        update_label('label-temp', false);
+        update_label('label-humidity', false);
+    }
+    ws_temp_humid.onmessage = function (event) {
+        var data = JSON.parse(event.data);
+        //console.log(data);
+        update_chart('chart-temp', data.temperature);
+        update_chart('chart-humidity', data.humidity);
+    };
+
+    var ws_bar = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/barometricPressure');
+    ws_bar.onopen = function() {
+        update_label('label-bar', true);
+    }
+    ws_bar.onclose = function() {
+        update_label('label-bar', false);
+    }
+    ws_bar.onerror = function() {
+        update_label('label-bar', false);
+    }
+    ws_bar.onmessage = function (event) {
+        var data = JSON.parse(event.data);
+        //console.log(data);
+        update_chart('chart-bar', data.pressure);
+    };
+
+    var ws_ir_temp = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/irTemperature');
+    ws_ir_temp.onopen = function() {
+        update_label('label-irtemp', true);
+        update_label('label-devtemp', true);
+    }
+    ws_ir_temp.onclose = function() {
+        update_label('label-irtemp', false);
+        update_label('label-devtemp', false);
+    }
+    ws_ir_temp.onerror = function() {
+        update_label('label-irtemp', false);
+        update_label('label-devtemp', false);
+    }
+    ws_ir_temp.onmessage = function (event) {
+        var data = JSON.parse(event.data);
+        //console.log(data);
+        update_chart('chart-irtemp', data.objectTemperature);
+        update_chart('chart-devtemp', data.ambientTemperature);
+    }
+
+    var update_label = function(label_id, connected) {
+        if(connected) {
+            $('#' + label_id).html('已連接');
+            $('#' + label_id).removeClass('label-default');
+            $('#' + label_id).removeClass('label-danger');
+            $('#' + label_id).addClass('label-success');
+        } else {
+            $('#' + label_id).html('未連接');
+            $('#' + label_id).removeClass('label-default');
+            $('#' + label_id).removeClass('label-success');
+            $('#' + label_id).addClass('label-danger');
+        }
+    }
+
+    var update_chart = function(chart_id, data) {
+        var chart = $('#' + chart_id).highcharts();
+        if(chart) {
+            var point = chart.series[0].points[0];
+            point.update(roundDecimal(data, 2));
+        }
+    }
+
+    var roundDecimal = function (val, precision) {
+        return Math.round(Math.round(val * Math.pow(10, (precision || 0) + 1)) / 10) / Math.pow(10, (precision || 0));
+    }
+
     var gaugeOptions = {
 
         chart: {
@@ -85,7 +189,7 @@ $(function () {
 
         series: [{
             name: '',
-            data: [50],
+            data: [0],
             dataLabels: {
                 format: '<div style="text-align:center"><span style="font-size:25px;color:' +
                     ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
@@ -111,7 +215,7 @@ $(function () {
 
         series: [{
             name: '',
-            data: [70],
+            data: [0],
             dataLabels: {
                 format: '<div style="text-align:center"><span style="font-size:25px;color:' +
                     ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
@@ -140,7 +244,7 @@ $(function () {
 
         series: [{
             name: '',
-            data: [30],
+            data: [0],
             dataLabels: {
                 format: '<div style="text-align:center"><span style="font-size:25px;color:' +
                     ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
@@ -166,7 +270,7 @@ $(function () {
 
         series: [{
             name: '',
-            data: [1004],
+            data: [0],
             dataLabels: {
                 format: '<div style="text-align:center"><span style="font-size:25px;color:' +
                     ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
@@ -192,7 +296,7 @@ $(function () {
 
         series: [{
             name: '',
-            data: [30],
+            data: [0],
             dataLabels: {
                 format: '<div style="text-align:center"><span style="font-size:25px;color:' +
                     ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
@@ -218,86 +322,85 @@ $(function () {
 @if ( $all_expired == true )
     <div class="col-md-6 col-md-offset-3 alert alert-danger">You have no active access, please <a href="/request">request</a> for a access first.</div>
 @else
-    <div class="container">
+<div class="container">
 
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">溫度</div>
-                    <div class="panel-body">
-                        <div id="chart-temp" style="width: 330px; height: 220px;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">相對濕度</div>
-                    <div class="panel-body">
-                        <div id="chart-humidity" style="width: 330px; height: 220px;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Sensor 狀態</div>
-                    <div class="panel-body">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <td>狀態</td>
-                                    <td><button class="btn btn-success btn-sm">已連接</button></td>
-
-                                </tr>
-                                <tr>
-                                    <td>ID</td>
-                                    <td>1246</td>
-                                </tr>
-                                <tr>
-                                    <td>UUID</td>
-                                    <td>{{ uniqid() }}</td>
-                                </tr>
-                                <tr>
-                                    <td>型號</td>
-                                    <td>CC1345</td>
-                                </tr>
-                                <tr>
-                                    <td>藍芽位址</td>
-                                    <td>13:6f:c3:7a:u1:90</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">溫度<span id="label-temp" class="label label-default pull-right">Loading</span></div>
+                <div class="panel-body">
+                    <div id="chart-temp" style="width: 330px; height: 220px;"></div>
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">紅外線溫度</div>
-                    <div class="panel-body">
-                        <div id="chart-irtemp" style="width: 330px; height: 220px;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">大氣壓力</div>
-                    <div class="panel-body">
-                        <div id="chart-bar" style="width: 330px; height: 220px;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">裝置溫度</div>
-                    <div class="panel-body">
-                        <div id="chart-devtemp" style="width: 330px; height: 220px;"></div>
-                    </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">相對濕度<span id="label-humidity" class="label label-default pull-right">Loading</span></div>
+                <div class="panel-body">
+                    <div id="chart-humidity" style="width: 330px; height: 220px;"></div>
                 </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Sensor 狀態</div>
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>狀態</td>
+                                <td id="dev-status">Loading...</td>
 
+                            </tr>
+                            <tr>
+                                <td>ID</td>
+                                <td id="dev-id"></td>
+                            </tr>
+                            <tr>
+                                <td>UUID</td>
+                                <td id="dev-uuid"></td>
+                            </tr>
+                            <tr>
+                                <td>型號</td>
+                                <td id="dev-type"></td>
+                            </tr>
+                            <tr>
+                                <td>藍芽位址</td>
+                                <td id="dev-address"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">紅外線溫度<span id="label-irtemp" class="label label-default pull-right">Loading</span></div>
+                <div class="panel-body">
+                    <div id="chart-irtemp" style="width: 330px; height: 220px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">大氣壓力<span id="label-bar" class="label label-default pull-right">Loading</span></div>
+                <div class="panel-body">
+                    <div id="chart-bar" style="width: 330px; height: 220px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">裝置溫度<span id="label-devtemp" class="label label-default pull-right">Loading</span></div>
+                <div class="panel-body">
+                    <div id="chart-devtemp" style="width: 330px; height: 220px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endif
 @endsection
