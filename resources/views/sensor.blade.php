@@ -207,86 +207,97 @@ $(function () {
 </script>
 @endsection
 
+
+
 @section('content')
-<div class="container">
+@foreach($data as $access)
+    @if( !$access->isExpired() )
+        {{$all_expired = false}}
+    @endif
+@endforeach
+@if ( $all_expired == true )
+    <div class="col-md-6 col-md-offset-3 alert alert-danger">You have no active access, please <a href="/request">request</a> for a access first.</div>
+@else
+    <div class="container">
 
-    <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">溫度</div>
-                <div class="panel-body">
-                    <div id="chart-temp" style="width: 330px; height: 220px;"></div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">溫度</div>
+                    <div class="panel-body">
+                        <div id="chart-temp" style="width: 330px; height: 220px;"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">相對濕度</div>
-                <div class="panel-body">
-                    <div id="chart-humidity" style="width: 330px; height: 220px;"></div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">相對濕度</div>
+                    <div class="panel-body">
+                        <div id="chart-humidity" style="width: 330px; height: 220px;"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">Sensor 狀態</div>
-                <div class="panel-body">
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <td>狀態</td>
-                                <td><button class="btn btn-success btn-sm">已連接</button></td>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Sensor 狀態</div>
+                    <div class="panel-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>狀態</td>
+                                    <td><button class="btn btn-success btn-sm">已連接</button></td>
 
-                            </tr>
-                            <tr>
-                                <td>ID</td>
-                                <td>1246</td>
-                            </tr>
-                            <tr>
-                                <td>UUID</td>
-                                <td>{{ uniqid() }}</td>
-                            </tr>
-                            <tr>
-                                <td>型號</td>
-                                <td>CC1345</td>
-                            </tr>
-                            <tr>
-                                <td>藍芽位址</td>
-                                <td>13:6f:c3:7a:u1:90</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                </tr>
+                                <tr>
+                                    <td>ID</td>
+                                    <td>1246</td>
+                                </tr>
+                                <tr>
+                                    <td>UUID</td>
+                                    <td>{{ uniqid() }}</td>
+                                </tr>
+                                <tr>
+                                    <td>型號</td>
+                                    <td>CC1345</td>
+                                </tr>
+                                <tr>
+                                    <td>藍芽位址</td>
+                                    <td>13:6f:c3:7a:u1:90</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">紅外線溫度</div>
+                    <div class="panel-body">
+                        <div id="chart-irtemp" style="width: 330px; height: 220px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">大氣壓力</div>
+                    <div class="panel-body">
+                        <div id="chart-bar" style="width: 330px; height: 220px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">裝置溫度</div>
+                    <div class="panel-body">
+                        <div id="chart-devtemp" style="width: 330px; height: 220px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">紅外線溫度</div>
-                <div class="panel-body">
-                    <div id="chart-irtemp" style="width: 330px; height: 220px;"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">大氣壓力</div>
-                <div class="panel-body">
-                    <div id="chart-bar" style="width: 330px; height: 220px;"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">裝置溫度</div>
-                <div class="panel-body">
-                    <div id="chart-devtemp" style="width: 330px; height: 220px;"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
+@endif
 @endsection
