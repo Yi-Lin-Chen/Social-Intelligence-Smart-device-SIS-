@@ -41,6 +41,7 @@ Route::delete('/approval/{id}' , 'ApprovalController@destroy');
 // Direct Control
 Route::get('/home' , 'HomeController@index');
 Route::get('/home/door/{query}' , 'HomeController@door');
+Route::post('/home/shutdown', 'ShutdownController@do_shutdown');
 
 // Manage User
 Route::get('/user' , 'UserController@index');

@@ -17,6 +17,30 @@
 <script>
 $(function() {
 
+    $('#rpi-shutdown').click(function() {
+
+        bootbox.dialog({
+          message: '<input type="password" class="form-control" id="rpi-shutdown-pass">',
+          title: "Enter current user password to shutdown the server",
+          buttons: {
+            danger: {
+              label: "Shutdown",
+              className: "btn-danger",
+              callback: function() {
+                  var pass = $('#rpi-shutdown-pass').val();
+                  $.post('/home/shutdown', {
+                      password: pass,
+                      _token  : window.Laravel.csrfToken
+                  }, function(resp) {
+                      console.log(resp);
+                  }, 'json');
+              }
+            },
+          }
+        });
+
+    });
+
     $('#door-status').click(function() {
         getStatus();
     });
@@ -166,6 +190,8 @@ var updateStatusBtn = function(text, btn_class) {
                     <button class="btn btn-warning" id="door-unlock">Unlock</button>
                     <hr>
                     <button class="btn btn-default" id="door-photo">Take Photo</button>
+                    <hr>
+                    <button class="btn btn-default" id="rpi-shutdown">Shutdown</button>
                 </div>
             </div>
         </div>
