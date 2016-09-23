@@ -127,7 +127,7 @@ var updateStatusBtn = function(text, btn_class) {
                                 <td>{{ $record->ip }}</td>
                                 <td>{{ $record->error_code }}</td>
                                 <td>
-                                    @if( $record->access_id == null )
+                                    @if( $record->access_id == null || $record->access()->first() == null )
                                         -
                                     @else
                                         Access #{{ $record->access_id }}<br/>
