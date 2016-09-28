@@ -19,7 +19,7 @@ class ShutdownController extends Controller
         if( Hash::check($pass, $user->password) ) {
             // Pass
             $status = true;
-            exec('sudo shutdown');
+            exec(env('SHUTDOWN_CMD', 'sudo shutdown'));
         }
 
         return [

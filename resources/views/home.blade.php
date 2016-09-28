@@ -17,6 +17,7 @@
 <script>
 $(function() {
 
+    @if( env('ALLOW_SHUTDOWN', false) )
     $('#rpi-shutdown').click(function() {
 
         bootbox.dialog({
@@ -33,13 +34,18 @@ $(function() {
                       _token  : window.Laravel.csrfToken
                   }, function(resp) {
                       console.log(resp);
+                      if(resp.status) {
+                          alert('Server going down');
+                      } else {
+                          alert('Shutdown Failed! please check /var/log/apache2/error.log');
+                      }
                   }, 'json');
               }
             },
           }
         });
-
     });
+    @endif
 
     $('#door-status').click(function() {
         getStatus();
@@ -193,7 +199,9 @@ var updateStatusBtn = function(text, btn_class) {
                     <hr>
                     <button class="btn btn-default" id="door-photo">Take Photo</button>
                     <hr>
+                    @if( env('ALLOW_SHUTDOWN', false) )
                     <button class="btn btn-default" id="rpi-shutdown">Shutdown</button>
+                    @endif
                 </div>
             </div>
         </div>
