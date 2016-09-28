@@ -4,7 +4,12 @@
 
 @section('styles')
 <style media="screen">
+.chart-container{
 
+}
+.chart-div {
+    height: 220px;
+}
 </style>
 @endsection
 
@@ -164,6 +169,7 @@ $(function () {
 
         plotOptions: {
             solidgauge: {
+                size:'100%',
                 dataLabels: {
                     y: 5,
                     borderWidth: 0,
@@ -312,35 +318,21 @@ $(function () {
 @endsection
 
 
-
 @section('content')
-@foreach($data as $access)
+
+@foreach( $data as $access)
     @if( !$access->isExpired() )
-        {{$all_expired = false}}
+        <?php $all_expired = false; ?>
     @endif
 @endforeach
+
 @if ( $all_expired == true )
     <div class="col-md-6 col-md-offset-3 alert alert-danger">You have no active access, please <a href="/request">request</a> for a access first.</div>
 @else
 <div class="container">
 
     <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">溫度<span id="label-temp" class="label label-default pull-right">Loading</span></div>
-                <div class="panel-body">
-                    <div id="chart-temp" style="width: 330px; height: 220px;"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">相對濕度<span id="label-humidity" class="label label-default pull-right">Loading</span></div>
-                <div class="panel-body">
-                    <div id="chart-humidity" style="width: 330px; height: 220px;"></div>
-                </div>
-            </div>
-        </div>
+
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">Sensor 狀態</div>
@@ -350,7 +342,6 @@ $(function () {
                             <tr>
                                 <td>狀態</td>
                                 <td id="dev-status">Loading...</td>
-
                             </tr>
                             <tr>
                                 <td>ID</td>
@@ -373,34 +364,54 @@ $(function () {
                 </div>
             </div>
         </div>
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">溫度<span id="label-temp" class="label label-default pull-right">Loading</span></div>
+                <div class="panel-body chart-container">
+                    <div id="chart-temp" class="chart-div"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">相對濕度<span id="label-humidity" class="label label-default pull-right">Loading</span></div>
+                <div class="panel-body chart-container">
+                    <div id="chart-humidity" class="chart-div"></div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="row">
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">紅外線溫度<span id="label-irtemp" class="label label-default pull-right">Loading</span></div>
-                <div class="panel-body">
-                    <div id="chart-irtemp" style="width: 330px; height: 220px;"></div>
+                <div class="panel-body chart-container">
+                    <div id="chart-irtemp" class="chart-div"></div>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">大氣壓力<span id="label-bar" class="label label-default pull-right">Loading</span></div>
-                <div class="panel-body">
-                    <div id="chart-bar" style="width: 330px; height: 220px;"></div>
+                <div class="panel-body chart-container">
+                    <div id="chart-bar" class="chart-div"></div>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">裝置溫度<span id="label-devtemp" class="label label-default pull-right">Loading</span></div>
-                <div class="panel-body">
-                    <div id="chart-devtemp" style="width: 330px; height: 220px;"></div>
+                <div class="panel-body chart-container">
+                    <div id="chart-devtemp" class="chart-div"></div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 @endif
 @endsection

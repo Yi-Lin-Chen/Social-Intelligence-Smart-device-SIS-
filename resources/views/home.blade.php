@@ -133,6 +133,7 @@ var updateStatusBtn = function(text, btn_class) {
             <div class="panel panel-default">
                 <div class="panel-heading">Recent QRCode Query Log</div>
                 <div class="panel-body">
+                    <div class="table-responsive">
                     <table class="table table-hover table-bordered">
                         <thead>
                             <tr>
@@ -167,6 +168,7 @@ var updateStatusBtn = function(text, btn_class) {
                             @endforeach
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>

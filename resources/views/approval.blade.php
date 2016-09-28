@@ -80,6 +80,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Pending User Request</div>
                 <div class="panel-body">
+                    <div class="table-responsive">
                     <table class="table table-bordered table-list">
                         <thead>
                             <tr>
@@ -118,6 +119,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
