@@ -198,9 +198,10 @@ var updateStatusBtn = function(text, btn_class) {
                     <button class="btn btn-warning" id="door-unlock">Unlock</button>
                     <hr>
                     <button class="btn btn-default" id="door-photo">Take Photo</button>
-                    <hr>
+
                     @if( env('ALLOW_SHUTDOWN', false) )
-                    <button class="btn btn-default" id="rpi-shutdown">Shutdown</button>
+                        <hr>
+                        <button class="btn btn-default" id="rpi-shutdown">Shutdown</button>
                     @endif
                 </div>
             </div>
