@@ -1,19 +1,35 @@
-# Home Gateway Manager
+# Gateway Manager
+
+### A project under the [Social Intelligence Smartlock (SIS)](http://sis.patricks.tw)
 
 Home Gateway Manager is a WebApp designed to control access of the smart lock system. The WebApp accepts user logging in via Facebook and sends this request to the manager. If the manager approves this request, the user will then receive a QR code by mail which he/she could use it to unlock the smart lock.
 
 This WebApp also provides a API to accept query from the QR Code Reader.
 
-Code to control the smart lock and QR code reader.
-[https://github.com/jeremy5189/DoorServer](https://github.com/jeremy5189/DoorServer)
+There is also a Project named [HomeGateway](https://github.com/jeremy5189/HomeGateway), which provides the following features:
+
+- Reading QR Code using a webcam and zbar in python
+- Control hardware relay via RPi GPIO using gpio commands
+- Connects to TI Sensortag via Node.js and emit realtime data to websocket.
+
+# System Structure
+
+![](http://i.imgur.com/KcH1rKY.png)
 
 # Screenshots
 
+### List of Pending User Request (for door access)
+![](http://i.imgur.com/w6CpjQ3.png)
+
+### Approval Page
 ![](http://i.imgur.com/0rJzTwI.png)
+
+### Realtime TI Sensor Tag
+![](http://i.imgur.com/SO8x25Z.gif)
 
 # Smart Lock Demo Video
 
-[https://www.youtube.com/watch?v=UvDTgSSAPtA](https://www.youtube.com/watch?v=UvDTgSSAPtA)
+[https://youtu.be/rcVKCsnfMRw](https://youtu.be/rcVKCsnfMRw)
 
 # Install
 
