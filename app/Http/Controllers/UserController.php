@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\User;
+use App\Access;
 use Validator;
 use Hash;
+use Log;
 
 class UserController extends Controller
 {
@@ -18,7 +20,10 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware([
+            'auth',
+            'auth.admin'
+        ]);
     }
 
     /**
@@ -51,23 +56,31 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email'  => 'required|email|unique:users',
-            'name' => 'required',
-            'level' => 'required|integer',
-            'phone' => 'required',
-            'password' => 'required|confirmed',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect('/user')
-                        ->withErrors($validator)
-                        ->withInput(); // Request::old('field')
-        }
-
         $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
-        $created = User::create($input);
+        if( User::where('email' , '=' , $input['email'])->count() > 0){
+            //已經被管理者刪除的帳號要重新加回去
+            User::where('email' , '=' , $input['email'])->update(['is_deleted' => false]);
+        }
+        else{
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'level' => 'required|integer',
+                'email'  => 'required|email|unique:users',
+                'phone' => 'required',
+                'password' => 'required|confirmed',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/user')
+                    ->withErrors($validator)
+                    ->withInput(); // Request::old('field')
+            }
+
+
+            $input['password'] = Hash::make($input['password']);
+            $input['fb_id'] = 0;
+            $created = User::create($input);
+        }
 
         return redirect('/user')->with('status', 'User created');
     }
@@ -103,7 +116,31 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'level' => 'required|integer',
+            'password' => 'confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/user')
+                ->withErrors($validator)
+                ->withInput(); // Request::old('field')
+        }
+
+        $input = $request->all();
+        unset($input['_token']);
+        unset($input['password_confirmation']);
+
+        if ($input['password'] == null){
+            unset($input['password']);
+        }else{
+            $input['password'] = Hash::make($input['password']);
+        }
+
+        User::where('id' , '=' , $id)->update($input);
+        return redirect('/user')->with('status', 'User updated.');
     }
 
     /**
@@ -114,6 +151,15 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if ( $id == 1 ){
+            abort(403);
+            redirect('/user');
+        } else {
+            Log::debug('Going to delete id = ' . $id);
+            User::where('id' , '=' , $id)->update(['is_deleted' => true] , ['password' => null]);
+            Access::where('user_id' , '=' , $id)->delete();
+            Log::debug('delete id = ' . $id);
+            redirect('/user');
+        }
     }
 }

@@ -3,61 +3,63 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
 use Socialite;
-use App\User;
 use Log;
 use Hash;
-use App\Http\Requests;
+use Mail;
+use Auth;
+
+use App\User;
+use App\RequestModel;
 
 class RequestController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware([
+            'auth'
+        ]);
+    }
+
     public function request()
     {
         return view('request');
     }
 
-    public function redirect()
+    public function send(Request $request)
     {
-        return Socialite::driver('facebook')->redirect();
-    }
 
-    public function callback(Request $request)
-    {
-        if( $request->input('code') == null )
-            abort(403);
+        $check = Auth::user();
 
-        $obj = Socialite::driver('facebook')->user();
+        // 存入 Request 紀錄
+        $req = RequestModel::create([
+            'user_id' => $check->id,
+            'state'   => 'pending'
+        ]);
 
-        Log::info('Got FB callback, User Name = ' . $obj->user['name'] . " ID = " . $obj->user['id']);
-
-        // Check if user exist?
-        $check = User::where('fb_id', $obj->user['id'])
-                ->orWhere('email', $obj->user['email'])
-                ->first();
-
-        if( $check == null ) {
-
-            Log::info('Got New User');
-
-            // Save User to DB
-            User::create([
-                'name'  => $obj->user['name'],
-                'email' => $obj->user['email'],
-                'password' => Hash::make($obj->user['id']),
-                'phone' => '',
-                'level' => 0,
-                'fb_id' => $obj->user['id']
-            ]);
-
-        } else {
-
-            Log::info('Old User');
-            Log::info($check);
-
-        }
+        // 通知管理員有人要求權限
+        $this->notifyManager($check, $req->id);
 
         return view('request-complete', [
-            'name' => $obj->user['name']
+            'name' => $check->name
         ]);
+    }
+
+    private function notifyManager(User $user, $req_id) {
+
+        // Get All manager
+        $manager_list = User::where('level', 1)->get();
+
+        foreach( $manager_list as $manager ) {
+            Log::debug('Send notify mail to ' . $manager->name);
+            Mail::to($manager)->send(new \App\Mail\RequestForAccess($user, $req_id));
+        }
+
     }
 }

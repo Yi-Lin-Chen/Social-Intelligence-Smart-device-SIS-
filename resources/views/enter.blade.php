@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Request')
+@section('title', 'Enter')
 
 @section('styles')
 <style media="screen">
@@ -10,7 +10,6 @@
 
 @section('scripts')
 
-
 @endsection
 
 @section('content')
@@ -19,11 +18,11 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
-                <div class="panel-heading">Request Permission from the room manager</div>
+                <div class="panel-heading">Retrive all your access QRCode.</div>
                 <div class="panel-body">
-                    <a href="/request/send" class="btn btn-danger btn-block">
-                        Send your request to the manager
-                    </a>
+                    <a href="/enter/redirect" class="btn btn-block btn-social btn-facebook">
+                       <span class="fa fa-facebook"></span> Sign in with Facebook
+                     </a>
                 </div>
             </div>
         </div>

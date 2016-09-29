@@ -4,16 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Record extends Model
+class RequestModel extends Model
 {
-    protected $table = 'record';
+    protected $table = 'request';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'access_id', 'note', 'ip', 'error_code', 'photo_ts'
+        'user_id', 'state'
     ];
 
     /**
@@ -25,7 +25,7 @@ class Record extends Model
 
     ];
 
-    public function access() {
-        return $this->belongsTo('App\Access', 'access_id', 'id');
+    public function user() {
+        return $this->belongsTo('App\User', 'user_id', 'id');
     }
 }

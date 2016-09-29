@@ -1,27 +1,40 @@
-# Laravel PHP Framework
+# Gateway Manager
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+### A project under the [Social Intelligence Smartlock (SIS)](http://sis.patricks.tw)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+Home Gateway Manager is a WebApp designed to control access of the smart lock system. The WebApp accepts user logging in via Facebook and sends this request to the manager. If the manager approves this request, the user will then receive a QR code by mail which he/she could use it to unlock the smart lock.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+This WebApp also provides a API to accept query from the QR Code Reader.
 
-## Official Documentation
+There is also a Project named [HomeGateway](https://github.com/jeremy5189/HomeGateway), which provides the following features:
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+- Reading QR Code using a webcam and zbar in python
+- Control hardware relay via RPi GPIO using gpio commands
+- Connects to TI Sensortag via Node.js and emit realtime data to websocket.
 
-## Contributing
+# System Structure
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+![](http://i.imgur.com/KcH1rKY.png)
 
-## Security Vulnerabilities
+# Screenshots
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+### List of Pending User Request (for door access)
+![](http://i.imgur.com/w6CpjQ3.png)
 
-## License
+### Approval Page
+![](http://i.imgur.com/0rJzTwI.png)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+### Realtime TI Sensor Tag
+![](http://i.imgur.com/SO8x25Z.gif)
+
+# Smart Lock Demo Video
+
+[https://youtu.be/rcVKCsnfMRw](https://youtu.be/rcVKCsnfMRw)
+
+# Install
+
+	sudo apt-get install php7.0 php7.0-mysql mysql-client mysql-server php-mbstring php-xml git vim zip unzip apache2 libapache2-mod-php7.0
+	composer install
+	cp .env.example .env
+	php artisan migrate --seed
+

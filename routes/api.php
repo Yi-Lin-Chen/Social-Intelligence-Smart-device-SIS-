@@ -14,9 +14,4 @@ use Illuminate\Http\Request;
 */
 
 // 預設都有 /api 在前面
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
-
 Route::get('/query', 'QueryController@query');
