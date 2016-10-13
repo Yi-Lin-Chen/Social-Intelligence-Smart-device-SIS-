@@ -76,7 +76,7 @@
                         <li><a href="{{ url('/request') }}">Request</a></li>
                     @else
                         <li><a href="/dashboard">Dashboard</a></li>
-                        <li><a href="/sensor">Sensor Control</a></li>
+                        <li><a href="/device">Device</a></li>
                         @if (Auth::user()->isManager())
                             <li><a href="/home">Home Control</a></li>
                             <li class="dropdown">

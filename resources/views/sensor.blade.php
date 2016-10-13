@@ -4,9 +4,6 @@
 
 @section('styles')
 <style media="screen">
-.chart-container{
-
-}
 .chart-div {
     height: 220px;
 }
@@ -18,31 +15,33 @@
 <script src="https://code.highcharts.com/highcharts-more.js"></script>
 <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 <script>
+// Print from PHP
+var UUID = '{{ $uuid }}';
+
 $(function () {
 
-    var info = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/info');
-    info.onclose = function() {
+    var connected = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/connected');
+    connected.onclose = function() {
         $('#dev-status').html('<span class="label label-danger">斷線</button>');
     }
-    info.onerror = function() {
+    connected.onerror = function() {
         $('#dev-status').html('<span class="label label-danger">斷線</button>');
     }
-    info.onmessage = function (event) {
-        var obj = JSON.parse(event.data);
-        for( var key in obj ) {
-            if(key == 'status') {
-                if( obj[key] == 'connected')
-                    $('#dev-' + key).html('<span class="label label-success">已連接</span>');
-                else {
-                    $('#dev-' + key).html('<span class="label label-danger">斷線</button>');
-                }
-            }
-            else
-                $('#dev-' + key).html(obj[key]);
+    connected.onmessage = function (event) {
+        var data = JSON.parse(event.data);
+        if( data[UUID] == undefined ) {
+            // Not connected
+            $('#dev-status').html('<span class="label label-danger">斷線</button>');
         }
-    };
+        else {
+            $('#dev-status').html('<span class="label label-success">已連接</span>');
+            for( var key in data[UUID] ) {
+                $('#dev-' + key).html(data[UUID][key]);
+            }
+        }
+    }
 
-    var ws_temp_humid = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/humidity');
+    var ws_temp_humid = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/humidity/' + UUID);
     ws_temp_humid.onopen = function() {
         update_label('label-temp', true);
         update_label('label-humidity', true);
@@ -58,11 +57,11 @@ $(function () {
     ws_temp_humid.onmessage = function (event) {
         var data = JSON.parse(event.data);
         //console.log(data);
-        update_chart('chart-temp', data.temperature);
-        update_chart('chart-humidity', data.humidity);
+        update_chart('chart-temp', data[UUID].temperature);
+        update_chart('chart-humidity', data[UUID].humidity);
     };
 
-    var ws_bar = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/barometricPressure');
+    var ws_bar = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/barometricPressure/' + UUID);;
     ws_bar.onopen = function() {
         update_label('label-bar', true);
     }
@@ -75,10 +74,10 @@ $(function () {
     ws_bar.onmessage = function (event) {
         var data = JSON.parse(event.data);
         //console.log(data);
-        update_chart('chart-bar', data.pressure);
+        update_chart('chart-bar', data[UUID].pressure);
     };
 
-    var ws_ir_temp = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/irTemperature');
+    var ws_ir_temp = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/irTemperature/' + UUID);
     ws_ir_temp.onopen = function() {
         update_label('label-irtemp', true);
         update_label('label-devtemp', true);
@@ -94,8 +93,8 @@ $(function () {
     ws_ir_temp.onmessage = function (event) {
         var data = JSON.parse(event.data);
         //console.log(data);
-        update_chart('chart-irtemp', data.objectTemperature);
-        update_chart('chart-devtemp', data.ambientTemperature);
+        update_chart('chart-irtemp', data[UUID].objectTemperature);
+        update_chart('chart-devtemp', data[UUID].ambientTemperature);
     }
 
     var update_label = function(label_id, connected) {

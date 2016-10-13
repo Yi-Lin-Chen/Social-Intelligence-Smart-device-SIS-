@@ -10,11 +10,12 @@ use Auth;
 
 class SensorController extends Controller
 {
-    public function index()
+    public function index($uuid)
     {
         return view('sensor', [
             'data'        => Access::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get(),
-            'all_expired' => true
+            'all_expired' => true,
+            'uuid'        => $uuid
         ]);
     }
 }
