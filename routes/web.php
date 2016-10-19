@@ -21,6 +21,7 @@ Auth::routes();
 // Device Control Route
 Route::get('/device', 'DeviceController@list');
 Route::get('/sensor/{uuid}', 'SensorController@index');
+Route::get('/bb8-control', function(){ return view('bb8-control'); });
 
 // Facebook Login Route
 Route::get('/auth/facebook/redirect', 'Auth\LoginController@redirectToFacebook');
