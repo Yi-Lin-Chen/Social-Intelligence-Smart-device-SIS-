@@ -38,6 +38,10 @@ var device_panel = '<div class="panel panel-info">' +
     '</div>'+
 '</div>';
 
+var device_div = '<div id="device" data-uuid="%s" class="device draggable">' +
+    '<img class="device-img" src="/img/device1.png">' +
+'</div>';
+
 var device = {
   "1111": {
      "type": 'fjaweio',
@@ -45,8 +49,9 @@ var device = {
    }
 };
 
+var current_device = {};
 
-$(function(){
+$(document).ready(function(){
 
     var info = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/connected');
 
@@ -60,11 +65,11 @@ $(function(){
         var device = JSON.parse(event.data);
         $('#device-panel').html('');
         for( var uuid in device ) {
-          $('#device-panel').append(sprintf(device_panel, device[uuid].type, device[uuid].address, uuid, uuid));
+          $('#device-panel').append(sprintf(device_panel, device[uuid].type, device[uuid].address, uuid));
         }
     }
 
-    //$('#device-panel').append(sprintf(device_panel, device["1111"].type, device["1111"].address, "1111" , "1111"));
+    $('#device-panel').append(sprintf(device_panel, device["1111"].type, device["1111"].address, "1111" ));
 
     $(document).on('click', '.btn-view', function(event) {
 
@@ -75,29 +80,38 @@ $(function(){
     });
 
     $(document).on('click', '.btn-add', function(event) {
-        var uuid = $(this).data('uuid');
+        var uuid = $(this).parent().data('uuid');
         console.log('Add %s', uuid);
 
+        if( current_device[uuid] != undefined )
+          return;
+        else {
+          current_device[uuid] = true;
+        }
+
+        $('#containment-wrapper').append(sprintf(device_div, uuid));
+
+        $('.draggable').draggable({
+          containment: "#containment-wrapper",
+          drag: function(){
+            var offset = $(this).offset();
+            var xPos = offset.left;
+            var yPos = offset.top;
+            $('#posX').text('x: ' + xPos);
+            $('#posY').text('y: ' + yPos);
+          },
+          stop: function(){
+            var finalOffset = $(this).offset();
+            var finalxPos = finalOffset.left;
+            var finalyPos = finalOffset.top;
+            $('#finalX').text('Final X:' + finalxPos);
+            $('#finalY').text('Final Y:' + finalyPos);
+          },
+          scroll:true
+        });
     });
 
-    $('.draggable').draggable({
-      containment:"containment-wrapper",
-      drag: function(){
-        var offset = $(this).offset();
-        var xPos = offset.left;
-        var yPos = offset.top;
-        $('#posX').text('x: ' + xPos);
-        $('#posY').text('y: ' + yPos);
-      },
-      stop: function(){
-        var finalOffset = $(this).offset();
-        var finalxPos = finalOffset.left;
-        var finalyPos = finalOffset.top;
-        $('#finalX').text('Final X:' + finalxPos);
-        $('#finalY').text('Final Y:' + finalyPos);
-      },
-      scroll:true
-    });
+
 });
 </script>
 @endsection
@@ -110,12 +124,6 @@ $(function(){
             <div class="panel panel-default">
                 <div class="panel-heading">Device Map</div>
                 <div id="containment-wrapper" class="panel-body roommap">
-                  <div id="device1" class="device draggable">
-                      <img class="device-img" src="/img/device1.png">
-                  </div>
-                  <div id="device2" class="device draggable">
-                      <img class="device-img" src="/img/device2.png">
-                  </div>
                 </div>
             </div>
         </div>
