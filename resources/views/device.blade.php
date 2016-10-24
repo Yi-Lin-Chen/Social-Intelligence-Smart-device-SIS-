@@ -31,7 +31,7 @@ var device_panel = '<div class="panel panel-info">' +
     '<div class="panel-body">' +
     '<span class="label label-info">%s</span>&nbsp;' +
     '<span class="label label-info">%s</span>' +
-    '<div class="btn-group pull-right" role="group" data-uuid="%s" data-number="%s">'+
+    '<div class="btn-group pull-right" role="group" data-uuid="%s">'+
       '<button type="button" class="btn btn-sm btn-add btn-default"><span class="glyphicon glyphicon-plus"></span></button>'+
       '<button type="button" class="btn btn-sm btn-delete btn-default"><span class="glyphicon glyphicon-minus"></span></button>'+
       '<button type="button" class="btn btn-sm btn-view btn-default"><span class="glyphicon glyphicon-arrow-right"></span></button>'+
@@ -39,7 +39,7 @@ var device_panel = '<div class="panel panel-info">' +
 '</div>';
 
 var device_div = '<div id="%s" data-uuid="%s" class="device draggable">' +
-    '<img class="device-img" src="/img/device' + "%s" + '.png">' +
+    '<img class="device-img" src="/img/device1.png">' +
 '</div>';
 
 // var device = {
@@ -64,17 +64,13 @@ function load_device(){
       console.log(res);
       if ( res.length != 0 ){
         for ( var index in res ){
-          $('#containment-wrapper').append(sprintf(device_div, res[index].uuid, res[index].uuid, index+1 ));
+          $('#containment-wrapper').append(sprintf(device_div, res[index].uuid, res[index].uuid));
           $('#' + res[index].uuid).offset({ top:res[index].y, left: res[index].x})
           register_draggable( res[index].uuid );
           current_device[res[index].uuid] = true;
         }
       }
     });
-    //var Offset = $('.draggable').offset;
-    // Offset.left = ;
-    // Offset.top = ;
-
 }
 
 function register_draggable( uuid ){
@@ -105,18 +101,16 @@ $(document).ready(function(){
     }
     info.onmessage = function (event) {
         var device = JSON.parse(event.data);
-        var number = 0;
         $('#device-panel').html('');
         for( var uuid in device ) {
-          number = number + 1 ;
-          $('#device-panel').append(sprintf(device_panel, device[uuid].type, device[uuid].address, uuid, number));
+          $('#device-panel').append(sprintf(device_panel, device[uuid].type, device[uuid].address, uuid));
         }
     }
 
 
-    // $('#device-panel').append(sprintf(device_panel, device["1111"].type, device["1111"].address, "1111", "1" ));
-    // $('#device-panel').append(sprintf(device_panel, device["2222"].type, device["2222"].address, "2222", "2" ));
-    // $('#device-panel').append(sprintf(device_panel, device["3333"].type, device["3333"].address, "3333", "3" ));
+    // $('#device-panel').append(sprintf(device_panel, device["1111"].type, device["1111"].address, "1111"));
+    // $('#device-panel').append(sprintf(device_panel, device["2222"].type, device["2222"].address, "2222"));
+    // $('#device-panel').append(sprintf(device_panel, device["3333"].type, device["3333"].address, "3333"));
 
     $(document).on('click', '.btn-view', function(event) {
 
@@ -128,8 +122,7 @@ $(document).ready(function(){
 
     $(document).on('click', '.btn-add', function(event) {
         var uuid = $(this).parent().data('uuid');
-        var number = $(this).parent().data('number');
-        console.log('Add %s', uuid , number);
+        console.log('Add %s', uuid);
 
         if( current_device[uuid] != undefined ){
           return;
@@ -138,7 +131,7 @@ $(document).ready(function(){
           current_device[uuid] = true;
         }
 
-        $('#containment-wrapper').append(sprintf(device_div, uuid, uuid, number));
+        $('#containment-wrapper').append(sprintf(device_div, uuid, uuid));
 
         register_draggable( uuid );
     });
