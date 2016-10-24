@@ -14,7 +14,7 @@ class Device extends Model
    * @var array
    */
   protected $fillable = [
-      'uuid', 'posx', 'posy'
+      'uuid', 'x', 'y'
   ];
 
   /**

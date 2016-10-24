@@ -29,9 +29,11 @@ class DeviceController extends Controller
    */
   public function index()
   {
-      return view('device', [
-          'device_array' => Device::all()
-      ]);
+      return view('device');
+  }
+
+  public function all_device(){
+      return Device::all();
   }
 
   /**
@@ -52,10 +54,13 @@ class DeviceController extends Controller
    */
   public function store(Request $request)
   {
-    if( Device::where('uuid' , '=' , $request->input('uuid'))->count() == 0){
-      $input = $request->all();
-      $created = Device::create($input);
-    }
+      $dev = Device::where('uuid' , $request->input('uuid'));
+      if( count($dev->get()) == 0 ){
+        Device::create($request->all());
+      }
+      else{
+        $dev->update([ 'x'=>$request['x'], 'y'=>$request['y'] ]);
+      }
   }
 
   /**
@@ -87,7 +92,7 @@ class DeviceController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update()
+  public function update( $uuid )
   {
       //
   }
@@ -98,14 +103,8 @@ class DeviceController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy()
+  public function destroy( $uuid )
   {
-      //
-  }
-
-
-  public function list()
-  {
-      return view('device');
+      return Device::where( 'uuid', $uuid )->delete();
   }
 }

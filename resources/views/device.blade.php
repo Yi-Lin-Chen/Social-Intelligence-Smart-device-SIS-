@@ -31,28 +31,70 @@ var device_panel = '<div class="panel panel-info">' +
     '<div class="panel-body">' +
     '<span class="label label-info">%s</span>&nbsp;' +
     '<span class="label label-info">%s</span>' +
-    '<div class="btn-group pull-right" role="group" data-uuid="%s">'+
+    '<div class="btn-group pull-right" role="group" data-uuid="%s" data-number="%s">'+
       '<button type="button" class="btn btn-sm btn-add btn-default"><span class="glyphicon glyphicon-plus"></span></button>'+
       '<button type="button" class="btn btn-sm btn-delete btn-default"><span class="glyphicon glyphicon-minus"></span></button>'+
       '<button type="button" class="btn btn-sm btn-view btn-default"><span class="glyphicon glyphicon-arrow-right"></span></button>'+
     '</div>'+
 '</div>';
 
-var device_div = '<div id="device" data-uuid="%s" class="device draggable">' +
-    '<img class="device-img" src="/img/device1.png">' +
+var device_div = '<div id="%s" data-uuid="%s" class="device draggable">' +
+    '<img class="device-img" src="/img/device' + "%s" + '.png">' +
 '</div>';
 
-var device = {
-  "1111": {
-     "type": 'fjaweio',
-     "address": '1111'
-   }
-};
+// var device = {
+//   "1111": {
+//      "type": 'fjaweio',
+//      "address": '1111'
+//    },
+//    "2222": {
+//       "type": 'fjaweio',
+//       "address": '2222'
+//     },
+//     "3333": {
+//        "type": 'fjaweio',
+//        "address": '3333'
+//      }
+// };
 
 var current_device = {};
 
-$(document).ready(function(){
+function load_device(){
+    $.get('/device/all',{} , function(res){
+      console.log(res);
+      if ( res.length != 0 ){
+        for ( var index in res ){
+          $('#containment-wrapper').append(sprintf(device_div, res[index].uuid, res[index].uuid, index));
+          $('#' + res[index].uuid).offset({ top:res[index].y, left: res[index].x})
+          register_draggable( res[index].uuid );
+          current_device[res[index].uuid] = true;
+        }
+      }
+    });
+    //var Offset = $('.draggable').offset;
+    // Offset.left = ;
+    // Offset.top = ;
 
+}
+
+function register_draggable( uuid ){
+    $( '#' + uuid ).draggable({
+      containment: "#containment-wrapper",
+      stop: function(){
+        var finalOffset = $(this).offset();
+        var finalxPos = finalOffset.left;
+        var finalyPos = finalOffset.top;
+
+        $.post('/device', {uuid: uuid, x:finalxPos, y:finalyPos, _token:window.Laravel.csrfToken}, function(resp) {
+          console.log(resp);
+        });
+      },
+      scroll:true
+    });
+}
+
+$(document).ready(function(){
+    load_device();
     var info = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/connected');
 
     info.onclose = function() {
@@ -63,13 +105,18 @@ $(document).ready(function(){
     }
     info.onmessage = function (event) {
         var device = JSON.parse(event.data);
+        var number = 0;
         $('#device-panel').html('');
         for( var uuid in device ) {
-          $('#device-panel').append(sprintf(device_panel, device[uuid].type, device[uuid].address, uuid));
+          number = number + 1 ;
+          $('#device-panel').append(sprintf(device_panel, device[uuid].type, device[uuid].address, uuid, number));
         }
     }
 
-    $('#device-panel').append(sprintf(device_panel, device["1111"].type, device["1111"].address, "1111" ));
+
+    // $('#device-panel').append(sprintf(device_panel, device["1111"].type, device["1111"].address, "1111", "1" ));
+    // $('#device-panel').append(sprintf(device_panel, device["2222"].type, device["2222"].address, "2222", "2" ));
+    // $('#device-panel').append(sprintf(device_panel, device["3333"].type, device["3333"].address, "3333", "3" ));
 
     $(document).on('click', '.btn-view', function(event) {
 
@@ -81,37 +128,39 @@ $(document).ready(function(){
 
     $(document).on('click', '.btn-add', function(event) {
         var uuid = $(this).parent().data('uuid');
-        console.log('Add %s', uuid);
+        var number = $(this).parent().data('number');
+        console.log('Add %s', uuid , number);
 
-        if( current_device[uuid] != undefined )
+        if( current_device[uuid] != undefined ){
           return;
+        }
         else {
           current_device[uuid] = true;
         }
 
-        $('#containment-wrapper').append(sprintf(device_div, uuid));
+        $('#containment-wrapper').append(sprintf(device_div, uuid, uuid, number));
 
-        $('.draggable').draggable({
-          containment: "#containment-wrapper",
-          drag: function(){
-            var offset = $(this).offset();
-            var xPos = offset.left;
-            var yPos = offset.top;
-            $('#posX').text('x: ' + xPos);
-            $('#posY').text('y: ' + yPos);
-          },
-          stop: function(){
-            var finalOffset = $(this).offset();
-            var finalxPos = finalOffset.left;
-            var finalyPos = finalOffset.top;
-            $('#finalX').text('Final X:' + finalxPos);
-            $('#finalY').text('Final Y:' + finalyPos);
-          },
-          scroll:true
-        });
+        register_draggable( uuid );
     });
 
-
+    $(document).on('click', '.btn-delete', function(event){
+        var uuid = $(this).parent().data('uuid');
+        console.log('Delete %s', uuid);
+        if ( current_device[uuid] != true ){
+            return;
+        }
+        else{
+            current_device[uuid] = undefined;
+            $('#' + uuid).remove();
+            $.ajax({
+                url: '/device/' + uuid,
+                method: 'DELETE',
+                data:{
+                    _token: window.Laravel.csrfToken
+                }
+            });
+        }
+    })
 });
 </script>
 @endsection
@@ -136,13 +185,5 @@ $(document).ready(function(){
             </div>
         </div>
     </div>
-</div>
-<div>
-    <ul>
-        <li id="posX">x: <span></span></li>
-        <li id="posY">y: <span></span></li>
-        <li id="finalX">Final X: <span></span></li>
-        <li id="finalY">Final Y: <span></span></li>
-    </ul>
 </div>
 @endsection
