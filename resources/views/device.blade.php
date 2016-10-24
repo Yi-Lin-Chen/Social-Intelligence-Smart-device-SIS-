@@ -64,7 +64,7 @@ function load_device(){
       console.log(res);
       if ( res.length != 0 ){
         for ( var index in res ){
-          $('#containment-wrapper').append(sprintf(device_div, res[index].uuid, res[index].uuid, index));
+          $('#containment-wrapper').append(sprintf(device_div, res[index].uuid, res[index].uuid, index+1 ));
           $('#' + res[index].uuid).offset({ top:res[index].y, left: res[index].x})
           register_draggable( res[index].uuid );
           current_device[res[index].uuid] = true;
