@@ -77,6 +77,7 @@
                     @else
                         <li><a href="/dashboard">Dashboard</a></li>
                         <li><a href="/device">Device</a></li>
+                        <li><a href="/bb8-control">BB8</a></li>
                         @if (Auth::user()->isManager())
                             <li><a href="/home">Home Control</a></li>
                             <li class="dropdown">
