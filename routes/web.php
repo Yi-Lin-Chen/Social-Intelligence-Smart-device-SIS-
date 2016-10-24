@@ -19,7 +19,8 @@ Route::get('/welcome/ourteam', function () { return view('welcome/ourteam');});
 Auth::routes();
 
 // Device Control Route
-Route::get('/device', 'DeviceController@list');
+Route::get('/device', 'DeviceController@index');
+Route::post('/device' , 'DeviceController@store');
 Route::get('/sensor/{uuid}', 'SensorController@index');
 
 // Facebook Login Route
