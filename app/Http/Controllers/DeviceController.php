@@ -52,7 +52,7 @@ class DeviceController extends Controller
    */
   public function store(Request $request)
   {
-    if( Device::where('uuid' , '=' , $input['uuid'])->count() = 0){
+    if( Device::where('uuid' , '=' , $request->input('uuid'))->count() == 0){
       $input = $request->all();
       $created = Device::create($input);
     }

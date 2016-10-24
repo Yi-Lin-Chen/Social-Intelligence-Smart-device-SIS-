@@ -23,7 +23,6 @@
 
 @section('script')
 <script src="/js/sprintf.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 
@@ -32,10 +31,11 @@ var device_panel = '<div class="panel panel-info">' +
     '<div class="panel-body">' +
     '<span class="label label-info">%s</span>&nbsp;' +
     '<span class="label label-info">%s</span>' +
-    '<button class="btn btn-default btn-sm btn-view pull-right" data-uuid="%s">View</button>'+
-    '<img class="btn btn-add pull-right" data-uuid="%s" src="/img/delete.png">'+
-    '<img class="btn btn-delete pull-right" data-uuid="%s" src="/img/add.png">'+
-    '</div>' +
+    '<div class="btn-group pull-right" role="group" data-uuid="%s">'+
+      '<button type="button" class="btn btn-sm btn-add btn-default"><span class="glyphicon glyphicon-plus"></span></button>'+
+      '<button type="button" class="btn btn-sm btn-delete btn-default"><span class="glyphicon glyphicon-minus"></span></button>'+
+      '<button type="button" class="btn btn-sm btn-view btn-default"><span class="glyphicon glyphicon-arrow-right"></span></button>'+
+    '</div>'+
 '</div>';
 
 var device = {
@@ -61,23 +61,14 @@ $(function(){
         $('#device-panel').html('');
         for( var uuid in device ) {
           $('#device-panel').append(sprintf(device_panel, device[uuid].type, device[uuid].address, uuid, uuid));
-          $.ajax({
-              url: '/device',
-              type: 'post',
-              data: {
-                  _token: window.Laravel.csrfToken
-              }
-          }).done(function(resp) {
-              console.log(resp);
-          });
         }
     }
 
-    $('#device-panel').append(sprintf(device_panel, device["1111"].type, device["1111"].address, "1111" , "1111"));
+    //$('#device-panel').append(sprintf(device_panel, device["1111"].type, device["1111"].address, "1111" , "1111"));
 
     $(document).on('click', '.btn-view', function(event) {
 
-        var uuid = $(this).data('uuid');
+        var uuid = $(this).parent().data('uuid');
         console.log('View %s', uuid);
 
         location.href = '/sensor/' + uuid;
@@ -130,7 +121,7 @@ $(function(){
         </div>
         <div class="col-md-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Connected Device<span id="dev-status"></span></div>
+                <div class="panel-heading">Connected Device<span id="dev-status pull-right"></span></div>
                 <div class="panel-body" id="device-panel">
 
                 </div>
