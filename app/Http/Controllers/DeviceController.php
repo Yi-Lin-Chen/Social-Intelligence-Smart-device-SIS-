@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Device;
+use Auth;
 
 class DeviceController extends Controller
 {
@@ -18,7 +19,6 @@ class DeviceController extends Controller
   {
       $this->middleware([
           'auth',
-          'auth.admin'
       ]);
   }
 
@@ -33,7 +33,7 @@ class DeviceController extends Controller
   }
 
   public function all_device(){
-      return Device::all();
+      return [ 'device'=>Device::all(), 'manager'=>Auth::user()->isManager()];
   }
 
   /**

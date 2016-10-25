@@ -66,14 +66,22 @@ var current_device = {};
 
 function load_device(){
     $.get('/device/all',{} , function(res){
+      var device = res.device;
+      var manager = res.manager;
       console.log(res);
-      if ( res.length != 0 ){
-        for ( var index in res ){
-          $('#containment-wrapper').append(sprintf(device_div, res[index].uuid, res[index].uuid, res[index].uuid));
-          $('#' + res[index].uuid).offset({ top:res[index].y, left: res[index].x})
-          register_draggable( res[index].uuid );
-          update_device_status( res[index].uuid );
-          current_device[res[index].uuid] = true;
+      if ( device.length != 0 ){
+        for ( var index in device ){
+          $('#containment-wrapper').append(sprintf(device_div, device[index].uuid, device[index].uuid, device[index].uuid));
+          $('#' + device[index].uuid).offset({ top: device[index].y, left: device[index].x });
+          update_device_status( device[index].uuid );
+          current_device[device[index].uuid] = true;
+          if ( manager == 1 ){
+              register_draggable( device[index].uuid );
+          }
+          else{
+              $( '.btn-add' ).attr( 'disabled', 'disabled' );
+              $( '.btn-delete' ).attr( 'disabled', 'disabled' );
+          }
         }
       }
     });
