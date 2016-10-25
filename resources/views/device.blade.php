@@ -15,10 +15,14 @@
   width: 30px;
 }
 .device-img{
-  width: 3em;
-  height: 3em;
+  color: rgba(255,0,87,0.22);
 }
+label{
+   display: inline-block;
+   width: 5em;
+ }
 </style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @endsection
 
 @section('script')
@@ -39,34 +43,36 @@ var device_panel = '<div class="panel panel-info">' +
 '</div>';
 
 var device_div = '<div id="%s" data-uuid="%s" class="device draggable">' +
-    '<img class="device-img" src="/img/device1.png">' +
+    '<span class="fa fa-asterisk fa-3x device-img" title="UUID: %s"></span>' +
 '</div>';
 
-// var device = {
-//   "1111": {
-//      "type": 'fjaweio',
-//      "address": '1111'
-//    },
-//    "2222": {
-//       "type": 'fjaweio',
-//       "address": '2222'
-//     },
-//     "3333": {
-//        "type": 'fjaweio',
-//        "address": '3333'
-//      }
-// };
+var connect_device  = {
+  "1111": {
+     "type": 'fjaweio',
+     "address": '1111'
+   },
+  //  "2222": {
+  //     "type": 'fjaweio',
+  //     "address": '2222'
+  //   },
+    "3333": {
+       "type": 'fjaweio',
+       "address": '3333'
+     }
+};
 
 var current_device = {};
+//var connect_device = {};
 
 function load_device(){
     $.get('/device/all',{} , function(res){
       console.log(res);
       if ( res.length != 0 ){
         for ( var index in res ){
-          $('#containment-wrapper').append(sprintf(device_div, res[index].uuid, res[index].uuid));
+          $('#containment-wrapper').append(sprintf(device_div, res[index].uuid, res[index].uuid, res[index].uuid));
           $('#' + res[index].uuid).offset({ top:res[index].y, left: res[index].x})
           register_draggable( res[index].uuid );
+          update_device_status( res[index].uuid );
           current_device[res[index].uuid] = true;
         }
       }
@@ -74,6 +80,7 @@ function load_device(){
 }
 
 function register_draggable( uuid ){
+    $( '#' + uuid + ' span').tooltip();
     $( '#' + uuid ).draggable({
       containment: "#containment-wrapper",
       stop: function(){
@@ -89,6 +96,15 @@ function register_draggable( uuid ){
     });
 }
 
+function update_device_status( uuid ){
+    if ( current_device[uuid] != connect_device[uuid] ){
+        $( '#' + uuid + ' span' ).css( 'color', 'rgba(255,0,87,0.87)' );
+    }
+    else{
+        $( '#' + uuid + ' span' ).css( 'color', 'rgba(255,0,87,0.22)' );
+    }
+}
+
 $(document).ready(function(){
     load_device();
     var info = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/connected');
@@ -100,17 +116,16 @@ $(document).ready(function(){
         $('#dev-status').html('<span class="label label-danger">斷線</span>');
     }
     info.onmessage = function (event) {
-        var device = JSON.parse(event.data);
+        connect_device = JSON.parse(event.data);
         $('#device-panel').html('');
-        for( var uuid in device ) {
-          $('#device-panel').append(sprintf(device_panel, device[uuid].type, device[uuid].address, uuid));
+        for( var uuid in connect_device ) {
+          $('#device-panel').append(sprintf(device_panel, connect_device[uuid].type, connect_device[uuid].address, uuid));
         }
     }
 
-
-    // $('#device-panel').append(sprintf(device_panel, device["1111"].type, device["1111"].address, "1111"));
-    // $('#device-panel').append(sprintf(device_panel, device["2222"].type, device["2222"].address, "2222"));
-    // $('#device-panel').append(sprintf(device_panel, device["3333"].type, device["3333"].address, "3333"));
+    for ( var uuid in connect_device){
+        $('#device-panel').append(sprintf(device_panel, connect_device[uuid].type, connect_device[uuid].address, uuid));
+    }
 
     $(document).on('click', '.btn-view', function(event) {
 
@@ -131,9 +146,10 @@ $(document).ready(function(){
           current_device[uuid] = true;
         }
 
-        $('#containment-wrapper').append(sprintf(device_div, uuid, uuid));
+        $('#containment-wrapper').append(sprintf(device_div, uuid, uuid, uuid));
 
         register_draggable( uuid );
+        update_device_status( uuid );
     });
 
     $(document).on('click', '.btn-delete', function(event){
