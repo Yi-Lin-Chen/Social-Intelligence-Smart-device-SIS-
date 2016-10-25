@@ -55,12 +55,17 @@ class DeviceController extends Controller
   public function store(Request $request)
   {
       $dev = Device::where('uuid' , $request->input('uuid'));
+      $ret = null;
       if( count($dev->get()) == 0 ){
-        Device::create($request->all());
+        $ret = Device::create($request->all());
       }
       else{
-        $dev->update([ 'x'=>$request['x'], 'y'=>$request['y'] ]);
+        $ret = $dev->update([
+            'x' => $request->input('x'),
+            'y' => $request->input('y')
+        ]);
       }
+      return $ret;
   }
 
   /**
