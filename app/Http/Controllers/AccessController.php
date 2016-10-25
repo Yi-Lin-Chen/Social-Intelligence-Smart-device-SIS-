@@ -77,7 +77,8 @@ class AccessController extends Controller
                         ->withInput(); // Request::old('field')
         }elseif ($request->input('expire_day') < 0 ){
             return redirect('/access')
-                ->withErrors('Expire day must be positive integer.');
+                ->withErrors('Expire day must be positive integer.')
+                ->withInput();
         }
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Validator;
 use App\Device;
 use App\Ifttt;
 
@@ -56,28 +57,28 @@ class IftttController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'uuid'    => 'required',
+            'if' => 'required',
+            'opr' => 'required',
+            'value' => 'required|numeric',
+            'then' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return redirect('/ifttt')
+                        ->withErrors($validator)
+                        ->withInput(); // Request::old('field')
+        }elseif ( ($request->input('uuid') == "0") | ($request->input('if') == "0") | ($request->input('opr') == "0") | $request->input('then') == "0" ){
+            return redirect('/ifttt')
+                ->withErrors('Please select all option.')
+                ->withInput();
+        }
 
-        // $validator = Validator::make($request->all(), [
-        //     'user_id'    => 'required|integer',
-        //     'expire_day' => 'required|integer'
-        // ]);
-        // if ($validator->fails()) {
-        //     return redirect('/access')
-        //                 ->withErrors($validator)
-        //                 ->withInput(); // Request::old('field')
-        // }elseif ($request->input('expire_day') < 0 ){
-        //     return redirect('/access')
-        //         ->withErrors('Expire day must be positive integer.');
-        // }
-        //
-        //
-        //
-        // $input = $request->all();
-        // $input['qr_code'] = sha1(uniqid());
-        //
-        // $created = Access::create($input);
-        //
-        // return redirect('/access')->with('status', 'Access granted.');
+        $input = $request->all();
+
+        $created = Ifttt::create($input);
+
+        return redirect('/ifttt')->with('status', 'Ifttt granted.');
     }
 
     /**

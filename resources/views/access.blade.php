@@ -204,7 +204,7 @@ $(function() {
                               </div>
                               <div class="form-group">
                                 <label for="expire_day">Expire Day</label>
-                                <input type="text" class="form-control" name="expire_day" id="expire_day" placeholder="Expire Day(0 is no expire time)" value="{{ Request::old('email') }}">
+                                <input type="text" class="form-control" name="expire_day" id="expire_day" placeholder="Expire Day(0 is no expire time)" value="{{ Request::old('expire_day') }}">
                               </div>
                           </div>
                       </div>
