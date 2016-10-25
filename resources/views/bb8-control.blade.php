@@ -69,6 +69,10 @@ $(function() {
         bb8_control.send('calibrate_finish');
     });
 
+    $('#reconnect').click(function() {
+        bb8_control.send('reconnect');
+    });
+
     // Disable overscroll / viewport moving on everything but scrollable divs
     $('body').on('touchmove', function (e) {
             if (!$('.scrollable').has($(e.target)).length) e.preventDefault();
@@ -110,7 +114,7 @@ $(function() {
                         <tbody>
                             <tr>
                                 <td><button class="btn btn-primary bb8-addi-btn" id="calibrate">方向校準</button></td>
-                                <td><button class="btn btn-default bb8-addi-btn">&nbsp;&nbsp;&nbsp;&nbsp;</button></td>
+                                <td><button class="btn btn-default bb8-addi-btn" id="reconnect">重新連接</button></td>
                                 <td><button class="btn btn-primary bb8-addi-btn" id="calibrate_finish">完成校準</button></td>
                             </tr>
                         </tbody>
