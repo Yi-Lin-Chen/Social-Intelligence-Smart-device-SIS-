@@ -46,23 +46,9 @@ var device_div = '<div id="%s" data-uuid="%s" class="device draggable">' +
     '<span class="fa fa-asterisk fa-3x device-img" title="UUID: %s"></span>' +
 '</div>';
 
-var connect_device  = {
-  "1111": {
-     "type": 'fjaweio',
-     "address": '1111'
-   },
-  //  "2222": {
-  //     "type": 'fjaweio',
-  //     "address": '2222'
-  //   },
-    "3333": {
-       "type": 'fjaweio',
-       "address": '3333'
-     }
-};
+var connect_device  = {};
 
 var current_device = {};
-//var connect_device = {};
 
 function load_device(){
     $.get('/device/all',{} , function(res){
