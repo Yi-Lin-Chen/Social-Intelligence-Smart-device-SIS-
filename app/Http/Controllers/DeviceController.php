@@ -18,7 +18,7 @@ class DeviceController extends Controller
   public function __construct()
   {
       $this->middleware([
-          'auth',
+          'auth'
       ]);
   }
 

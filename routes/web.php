@@ -25,6 +25,9 @@ Route::get('/device/all', 'DeviceController@all_device');
 Route::delete('/device/{uuid}' , 'DeviceController@destroy');
 Route::get('/sensor/{uuid}', 'SensorController@index');
 Route::get('/bb8-control', function(){ return view('bb8-control'); });
+Route::get('/ifttt', 'IftttController@index');
+Route::post('/ifttt', 'IftttController@store');
+Route::delete('/ifttt/{uuid}', 'IftttController@destroy');
 
 // Facebook Login Route
 Route::get('/auth/facebook/redirect', 'Auth\LoginController@redirectToFacebook');
