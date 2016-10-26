@@ -53,6 +53,7 @@ var current_device = {};  //device on map
 
 //Load device setted address
 function load_device(){
+    $( '#containment-wrapper' ).html('');
     $.get('/device/all',{} , function(res){
       var device = res.device;
       var manager = res.manager;
@@ -95,7 +96,7 @@ function register_draggable( uuid ){
 
 //Update device img color with connect ststus
 function update_device_status( uuid ){
-    if ( current_device[uuid] != connect_device[uuid] ){
+    if ( current_device[uuid] == true &&  connect_device[uuid] != undefined ){
         $( '#' + uuid + ' span' ).css( 'color', 'rgba(255,0,87,0.87)' );
     }
     else{
@@ -108,15 +109,14 @@ $(document).ready(function(){
     //To get connecting device
     var info = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/connected');
     info.onclose = function() {
-        connect_device ="";
         $('#dev-status').html('<span class="label label-danger">斷線</span>');
     }
     info.onerror = function() {
-        connect_device ="";
         $('#dev-status').html('<span class="label label-danger">斷線</span>');
     }
     info.onmessage = function (event) {
         connect_device = JSON.parse(event.data);
+        load_device();
         $('#device-panel').html('');
         for( var uuid in connect_device ) {
           $('#device-panel').append(sprintf(device_panel, connect_device[uuid].type, connect_device[uuid].address, uuid));
