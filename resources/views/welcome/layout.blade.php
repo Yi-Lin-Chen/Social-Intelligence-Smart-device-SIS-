@@ -49,7 +49,7 @@
 					<footer id="footer">
 						<div class="inner">
 							<ul class="copyright">
-								<li>© 2016 Goodlab. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+								<li>© 2016 Goodlab. All rights reserved</li><li>Design: HTML5 UP</li>
 							</ul>
 						</div>
 					</footer>

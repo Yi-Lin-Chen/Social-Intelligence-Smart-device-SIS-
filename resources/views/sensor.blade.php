@@ -11,9 +11,9 @@
 @endsection
 
 @section('script')
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/highcharts-more.js"></script>
-<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+<script src="/js/highcharts.js"></script>
+<script src="/js/highcharts-more.js"></script>
+<script src="/js/solid-gauge.js"></script>
 <script>
 // Print from PHP
 var UUID = '{{ $uuid }}';

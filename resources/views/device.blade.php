@@ -22,12 +22,12 @@ label{
    width: 5em;
  }
 </style>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/css/jquery-ui.css">
 @endsection
 
 @section('script')
 <script src="/js/sprintf.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/js/jquery-ui.js"></script>
 <script>
 
 //device list
@@ -182,7 +182,7 @@ $(document).ready(function(){
     <div class="row">
         <div class="col-md-8">
             <!-- 拖拉介面塞在這裡 -->
-            
+
             <div class="panel panel-default">
                 <div class="panel-heading">Device Map</div>
                 <div class="table-responsive">
