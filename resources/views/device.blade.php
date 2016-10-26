@@ -58,19 +58,19 @@ function load_device(){
       var manager = res.manager;
       console.log(res);
       if ( device.length != 0 ){
-        for ( var index in device ){
-          $('#containment-wrapper').append(sprintf(device_div, device[index].uuid, device[index].uuid, device[index].uuid));
-          $('#' + device[index].uuid).offset({ top: device[index].y, left: device[index].x });
-          update_device_status( device[index].uuid );
-          current_device[device[index].uuid] = true;
-          if ( manager == 1 ){
-              register_draggable( device[index].uuid );
+          for ( var index in device ){
+              $('#containment-wrapper').append(sprintf(device_div, device[index].uuid, device[index].uuid, device[index].uuid));
+              $('#' + device[index].uuid).offset({ top: device[index].y, left: device[index].x });
+              update_device_status( device[index].uuid );
+              current_device[device[index].uuid] = true;
+              if ( manager == 1 ){
+                  register_draggable( device[index].uuid );
+              }
+              else{
+                  $( '.btn-add' ).attr( 'disabled', 'disabled' );
+                  $( '.btn-delete' ).attr( 'disabled', 'disabled' );
+              }
           }
-          else{
-              $( '.btn-add' ).attr( 'disabled', 'disabled' );
-              $( '.btn-delete' ).attr( 'disabled', 'disabled' );
-          }
-        }
       }
     });
 }
@@ -100,6 +100,7 @@ function update_device_status( uuid ){
     }
     else{
         $( '#' + uuid + ' span' ).css( 'color', 'rgba(255,0,87,0.22)' );
+        $( '#' + uuid + ' span' ).attr( 'title' , "UUID: " + uuid + " disconnected" );
     }
 }
 
