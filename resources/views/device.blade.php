@@ -182,9 +182,12 @@ $(document).ready(function(){
     <div class="row">
         <div class="col-md-8">
             <!-- 拖拉介面塞在這裡 -->
+            
             <div class="panel panel-default">
                 <div class="panel-heading">Device Map</div>
-                <div id="containment-wrapper" class="panel-body roommap">
+                <div class="table-responsive">
+                  <div id="containment-wrapper" class="panel-body roommap">
+                  </div>
                 </div>
             </div>
         </div>
