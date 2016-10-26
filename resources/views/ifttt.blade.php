@@ -16,13 +16,13 @@
 $(function() {
 
     $(document).on('click' , '.btn-delete' , function(){
-        var uuid = $(this).data('uuid');
-        console.log('btn-delete click, id = ' + uuid);
+        var id = $(this).data('id');
+        console.log('btn-delete click, id = ' + id);
 
-        bootbox.confirm('Do you really want to delete ifttt #' + uuid + '?', function(ret) {
+        bootbox.confirm('Do you really want to delete ifttt #' + id + '?', function(ret) {
             if (ret) {
                 $.ajax({
-                    url: '/ifttt/' + uuid,
+                    url: '/ifttt/' + id,
                     method: 'DELETE',
                     data: {
                         _token: window.Laravel.csrfToken
@@ -106,12 +106,14 @@ $(function() {
                                           Speaker
                                       @elseif ( $ifttt->then == "open_door" )
                                           Open door
-                                      @elseif ( $ifttt->then == "webcook" )
-                                          Webcook
+                                      @elseif ( $ifttt->then == "email" )
+                                          Send Email
+                                      @elseif ( $ifttt->then == "email_photo" )
+                                          Send photo by email
                                       @endif
                                     </td>
                                     <td>
-                                        <button data-uuid="{{ $ifttt->uuid }}"  class="btn btn-danger btn-xs btn-delete"><span class="glyphicon glyphicon-remove"></span></button>
+                                        <button data-id="{{ $ifttt->id }}"  class="btn btn-danger btn-xs btn-delete"><span class="glyphicon glyphicon-remove"></span></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -178,7 +180,8 @@ $(function() {
                                             <option value="0">Please select value.</option>
                                             <option value="speaker">Speaker</option>
                                             <option value="open_door">Open door</option>
-                                            <option value="webcook">Webcook</option>
+                                            <option value="email">Send email</option>
+                                            <option value="email_photo">Send photo by email</option>
                                         </select>
                                     </td>
                                 </tr>

@@ -121,8 +121,8 @@ class IftttController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($uuid)
+    public function destroy($id)
     {
-        return Ifttt::where( 'uuid', $uuid )->delete();
+        return Ifttt::destroy($id);
     }
 }
