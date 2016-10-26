@@ -30,6 +30,7 @@ label{
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 
+//device list
 var device_panel = '<div class="panel panel-info">' +
     '<div class="panel-heading"><span class="glyphicon glyphicon-record"></span> Sensortag</div>' +
     '<div class="panel-body">' +
@@ -42,14 +43,15 @@ var device_panel = '<div class="panel panel-info">' +
     '</div>'+
 '</div>';
 
+//device img
 var device_div = '<div id="%s" data-uuid="%s" class="device draggable">' +
     '<span class="fa fa-asterisk fa-3x device-img" title="UUID: %s"></span>' +
 '</div>';
 
-var connect_device  = {};
+var connect_device  = {}; //connecting device
+var current_device = {};  //device on map
 
-var current_device = {};
-
+//Load device setted address
 function load_device(){
     $.get('/device/all',{} , function(res){
       var device = res.device;
@@ -73,6 +75,7 @@ function load_device(){
     });
 }
 
+//Device img register draggable
 function register_draggable( uuid ){
     $( '#' + uuid + ' span').tooltip();
     $( '#' + uuid ).draggable({
@@ -90,6 +93,7 @@ function register_draggable( uuid ){
     });
 }
 
+//Update device img color with connect ststus
 function update_device_status( uuid ){
     if ( current_device[uuid] != connect_device[uuid] ){
         $( '#' + uuid + ' span' ).css( 'color', 'rgba(255,0,87,0.87)' );
@@ -100,13 +104,14 @@ function update_device_status( uuid ){
 }
 
 $(document).ready(function(){
-    load_device();
+    //To get connecting device
     var info = new WebSocket('ws://{{ env('WEBSOCKET_ADDR') }}/sensortag/connected');
-
     info.onclose = function() {
+        connect_device ="";
         $('#dev-status').html('<span class="label label-danger">斷線</span>');
     }
     info.onerror = function() {
+        connect_device ="";
         $('#dev-status').html('<span class="label label-danger">斷線</span>');
     }
     info.onmessage = function (event) {
@@ -117,10 +122,9 @@ $(document).ready(function(){
         }
     }
 
-    for ( var uuid in connect_device){
-        $('#device-panel').append(sprintf(device_panel, connect_device[uuid].type, connect_device[uuid].address, uuid));
-    }
+    load_device();  //Load device address on device map
 
+    //button view device
     $(document).on('click', '.btn-view', function(event) {
 
         var uuid = $(this).parent().data('uuid');
@@ -129,6 +133,7 @@ $(document).ready(function(){
         location.href = '/sensor/' + uuid;
     });
 
+    //button add device img on device map
     $(document).on('click', '.btn-add', function(event) {
         var uuid = $(this).parent().data('uuid');
         console.log('Add %s', uuid);
@@ -146,6 +151,7 @@ $(document).ready(function(){
         update_device_status( uuid );
     });
 
+    //button delete device img on map
     $(document).on('click', '.btn-delete', function(event){
         var uuid = $(this).parent().data('uuid');
         console.log('Delete %s', uuid);
