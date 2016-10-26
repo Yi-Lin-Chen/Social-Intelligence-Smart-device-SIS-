@@ -83,7 +83,9 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/device">Device Control</a></li>
                                 <li><a href="/bb8-control">BB8 Control</a></li>
-                                <li><a href="/ifttt">IFTTT</a></li>
+                                @if (Auth::user()->isManager())
+                                    <li><a href="/ifttt">IFTTT</a></li>
+                                @endif
                             </ul>
                         </li>
                         @if (Auth::user()->isManager())
