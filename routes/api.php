@@ -15,3 +15,6 @@ use Illuminate\Http\Request;
 
 // 預設都有 /api 在前面
 Route::get('/query', 'QueryController@query');
+
+// Email notification
+Route::post('/notify/manager', 'EmailController@notify_manager');
