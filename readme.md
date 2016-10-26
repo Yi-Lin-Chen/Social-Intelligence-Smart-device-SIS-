@@ -18,6 +18,9 @@ There is also a Project named [HomeGateway](https://github.com/jeremy5189/HomeGa
 
 # Screenshots
 
+### Home Control (Access Log, Door Control)
+![](http://i.imgur.com/J9901Ra.png)
+
 ### List of Pending User Request (for door access)
 ![](http://i.imgur.com/w6CpjQ3.png)
 
@@ -25,7 +28,15 @@ There is also a Project named [HomeGateway](https://github.com/jeremy5189/HomeGa
 ![](http://i.imgur.com/0rJzTwI.png)
 
 ### Realtime TI Sensor Tag
+![](http://i.imgur.com/LAYNAwX.png)
+
 ![](http://i.imgur.com/SO8x25Z.gif)
+
+### IFTTT (If that then that) for sensor 
+![](http://i.imgur.com/ucGzBW7.png)
+
+### BB8 robot control via Websocket
+![](http://i.imgur.com/4rKo5Zu.png)
 
 # Smart Lock Demo Video
 
@@ -37,4 +48,9 @@ There is also a Project named [HomeGateway](https://github.com/jeremy5189/HomeGa
 	composer install
 	cp .env.example .env
 	php artisan migrate --seed
+
+## Default User
+
+	admin@example.com
+	password
 
