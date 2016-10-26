@@ -64,13 +64,17 @@ class IftttController extends Controller
             'value' => 'required|numeric',
             'then' => 'required'
         ]);
-        if ($validator->fails()) {
+        if ( ($request->input('uuid') == "0") | ($request->input('if') == "0") | ($request->input('opr') == "0") ){
+            return redirect('/ifttt')
+                ->withErrors('Please select all option.')
+                ->withInput();
+        }elseif ($validator->fails()) {
             return redirect('/ifttt')
                         ->withErrors($validator)
                         ->withInput(); // Request::old('field')
-        }elseif ( ($request->input('uuid') == "0") | ($request->input('if') == "0") | ($request->input('opr') == "0") | $request->input('then') == "0" ){
+        }elseif ( $request->input('then') == "0" ){
             return redirect('/ifttt')
-                ->withErrors('Please select all option.')
+                ->withErrors('Please select then option.')
                 ->withInput();
         }
 
@@ -78,7 +82,7 @@ class IftttController extends Controller
 
         $created = Ifttt::create($input);
 
-        return redirect('/ifttt')->with('status', 'Ifttt granted.');
+        return redirect('/ifttt')->with('status', 'IFTTT added.');
     }
 
     /**

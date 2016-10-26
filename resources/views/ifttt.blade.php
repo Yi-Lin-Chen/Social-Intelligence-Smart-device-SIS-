@@ -70,7 +70,7 @@ $(function() {
                             <tr>
                                 <th>UUID</th>
                                 <th>IF</th>
-                                <th>Operation</th>
+                                <th>Operator</th>
                                 <th>Value</th>
                                 <th>Then</th>
                                 <th>Delete</th>
@@ -137,7 +137,7 @@ $(function() {
                                 <tr>
                                     <th>UUID</th>
                                     <th>IF</th>
-                                    <th>Operation</th>
+                                    <th>Operator</th>
                                     <th>Value</th>
                                     <th>Then</th>
                                 </tr>
