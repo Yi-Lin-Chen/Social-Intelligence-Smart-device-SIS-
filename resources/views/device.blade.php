@@ -62,8 +62,8 @@ function load_device(){
           for ( var index in device ){
               $('#containment-wrapper').append(sprintf(device_div, device[index].uuid, device[index].uuid, device[index].uuid));
               $('#' + device[index].uuid).offset({ top: device[index].y, left: device[index].x });
-              update_device_status( device[index].uuid );
               current_device[device[index].uuid] = true;
+	      update_device_status( device[index].uuid );
               if ( manager == 1 ){
                   register_draggable( device[index].uuid );
               }
@@ -96,10 +96,12 @@ function register_draggable( uuid ){
 
 //Update device img color with connect ststus
 function update_device_status( uuid ){
-    if ( current_device[uuid] == true &&  connect_device[uuid] != undefined ){
-        $( '#' + uuid + ' span' ).css( 'color', 'rgba(255,0,87,0.87)' );
+    console.log(uuid);
+    if ( current_device[uuid] == true && connect_device[uuid] != undefined ){
+        console.log('flag');
+	$( '#' + uuid + ' span' ).css( 'color', 'rgba(255,0,87,0.87)' );
     }
-    else{
+    else {
         $( '#' + uuid + ' span' ).css( 'color', 'rgba(255,0,87,0.22)' );
         $( '#' + uuid + ' span' ).attr( 'title' , "UUID: " + uuid + " disconnected" );
     }
@@ -123,7 +125,7 @@ $(document).ready(function(){
         }
     }
 
-    load_device();  //Load device address on device map
+    //load_device();  //Load device address on device map
 
     //button view device
     $(document).on('click', '.btn-view', function(event) {
