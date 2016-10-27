@@ -16,7 +16,7 @@
 
           <!-- Header -->
             <header id="header" class="alt">
-              <a href="/" class="logo"><strong>Gateway</strong> <span>Manager</span></a>
+              <a href="/" class="logo"><strong>SIS</strong> <span>GatewayManager</span></a>
               <nav>
                 <a href="#menu">Menu</a>
               </nav>
@@ -38,22 +38,15 @@
                   <h1>Social Intelligence Smart-device</h1>
                 </header>
                 <div class="content">
-                  <p><h4>Social Intelligence Smart-device，簡稱SIS，是一套可供訪客使用的家戶物聯網系統</h4></p>
+                  <h4>Social Intelligence Smart-device (SIS)，是一套可供訪客使用的家戶物聯網系統</h4>
                 </div>
                 <ul class="actions">
-                  <li><a href="#one" class="button next scrolly">Get Started</a></li>
+                  <li><a href="#one" class="button next scrolly">Learn more</a></li>
                 </ul>
               </div>
             </section>
 
           <!-- Main -->
-              <section id="two">
-                  <div class="inner">
-                    <header class="major">
-                      <h2>Our system</h2>
-                    </header>
-                  </div>
-                </section>
 
             <div id="main">
 
@@ -65,7 +58,7 @@
                     </span>
                     <header class="major">
                       <h3>社群身分認證</a></h3>
-                      <p><h4>屋主透過Facebook認證訪客身份</h4></p>
+                      <p><h4>透過 Facebook 認證訪客身份</h4></p>
                     </header>
                   </article>
                   <article>
@@ -74,7 +67,7 @@
                     </span>
                     <header class="major">
                       <h3>門禁管理</a></h3>
-                      <p><h4>遠端監控及遠端監控門鎖</h4></p>
+                      <p><h4>遠端監控及門禁授權管制</h4></p>
                     </header>
                   </article>
                   <article>
@@ -83,7 +76,7 @@
                     </span>
                     <header class="major">
                       <h3>裝置地圖</a></h3>
-                      <p><h4>設定裝置位置及上傳房屋平面圖</h4></p>
+                      <p><h4>標記智慧裝置於屋內之位置</h4></p>
                     </header>
                   </article>
                   <article>
@@ -91,8 +84,8 @@
                       <img src="/img/sensor.png" alt="" />
                     </span>
                     <header class="major">
-                      <h3>裝置(Sensor)資訊</a></h3>
-                      <p><h4>瀏覽Sensor相關資訊</h4></p>
+                      <h3>智慧感測器配對</a></h3>
+                      <p><h4>智慧感測器即時資訊面板</h4></p>
                     </header>
                   </article>
                   <article>
@@ -100,8 +93,8 @@
                       <img src="/img/bb8.png" alt="" />
                     </span>
                     <header class="major">
-                      <h3>BB8智慧裝置控制</a></h3>
-                      <p><h4>控制BB8機器人</h4></p>
+                      <h3>智慧裝置控制</a></h3>
+                      <p><h4>支援多人協同控制 BB8 機器人</h4></p>
                     </header>
                   </article>
                   <article>
@@ -110,7 +103,7 @@
                     </span>
                     <header class="major">
                       <h3>智慧觸發條件</a></h3>
-                      <p><h4>設定相關智慧裝置觸發條件</h4></p>
+                      <p><h4>根據感測器設定相關智慧裝置觸發條件</h4></p>
                     </header>
                   </article>
                 </section>
@@ -123,8 +116,8 @@
                     </header>
                     <p>組長：陳儀玲｜組員：顏敬柏｜組員：李昕｜組員：林美馨</p>
                     <ul class="actions">
-                             <li><a href="."  class="button">Back</a></li>
-                            </ul>
+                        <li><a href="#banner" class="button scrolly">Back</a></li>
+                    </ul>
                   </div>
                 </section>
 
