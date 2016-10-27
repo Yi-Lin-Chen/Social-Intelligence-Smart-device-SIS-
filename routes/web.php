@@ -11,10 +11,7 @@
 |
 */
 
-Route::get('/', function () { return view('welcome/welcome');});
-Route::get('/welcome/user', function () { return view('welcome/user');});
-Route::get('/welcome/manager', function () { return view('welcome/manager');});
-Route::get('/welcome/ourteam', function () { return view('welcome/ourteam');});
+Route::get('/', function () { return view('welcome');});
 
 Auth::routes();
 
