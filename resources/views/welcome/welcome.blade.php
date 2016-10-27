@@ -12,7 +12,7 @@
         <section class="tiles">
             <article class="style1">
                 <span class="image">
-                    <img src="/img/pic01.jpg" alt="" />
+                    <img src="/img/pic01.jpg" alt="" >
                 </span>
                 <a href="/welcome/manager">
                     <h2>Notes to Manager</h2>
@@ -23,7 +23,7 @@
             </article>
             <article class="style2">
                 <span class="image">
-                    <img src="/img/pic02.jpg" alt="" />
+                    <img src="/img/pic02.jpg" alt="" >
                 </span>
                 <a href="/welcome/user">
                     <h2>Notes to User</h2>
@@ -34,7 +34,7 @@
             </article>
             <article class="style3">
                 <span class="image">
-                    <img src="/img/pic03.jpg" alt="" />
+                    <img src="/img/pic03.jpg" alt="" >
                 </span>
                 <a href="/welcome/ourteam">
                     <h2>Our team</h2>

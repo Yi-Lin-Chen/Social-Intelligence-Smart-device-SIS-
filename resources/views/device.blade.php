@@ -19,7 +19,7 @@
 }
 label{
    display: inline-block;
-   width: 5em;
+   /*width: 5em;*/
  }
 </style>
 <link rel="stylesheet" href="/css/jquery-ui.css">
@@ -196,6 +196,25 @@ $(document).ready(function(){
                 <div class="panel-heading">Connected Device<span id="dev-status pull-right"></span></div>
                 <div class="panel-body" id="device-panel">
 
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Change map background<span id="pull-right"></span></div>
+                <div class="panel-body" id="device-panel">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    <form action="/device/upload" method="post" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <input type="file" id="file" name="photo">
+                            <p class="help-block">Please select image.</p>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-default pull-right">Upload</button>
+                    </form>
                 </div>
             </div>
         </div>

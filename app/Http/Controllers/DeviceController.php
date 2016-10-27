@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use App\Http\Requests;
 use App\Device;
 use Auth;
+use Log;
 
 class DeviceController extends Controller
 {
@@ -97,9 +99,18 @@ class DeviceController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update( $uuid )
+  public function update( Request $request )
   {
-      //
+      $path = null;
+      if( $request->file('photo') != null ) {
+          $path = $request->file('photo')->store('photos');
+          Log::info($path);
+          //Storage::move( $path, '../public/img/room_layout.jpg');
+          return redirect('/device')->with('status', 'Upload success.');
+      }
+      else{
+          return redirect('/device')->with('status', 'Upload fail.');
+      }
   }
 
   /**
