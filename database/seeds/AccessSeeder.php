@@ -14,7 +14,7 @@ class AccessSeeder extends Seeder
     public function run()
     {
         Access::create([
-            'qr_code'    => 'e472b7e8d315004ec7a14268f18f95d8a9728173',
+            'qr_code'    => sha1(uniqid()),
             'expire_day' => 0,
             'user_id'    => 1
         ]);
