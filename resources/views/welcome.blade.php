@@ -114,12 +114,33 @@
                     <header class="major">
                       <h2>Our team</h2>
                     </header>
-                    <p>組長：陳儀玲｜組員：顏敬柏｜組員：李昕｜組員：林美馨</p>
+                    <div class="2u 12u$(small)">
+                    <ul class="alt">
+                        <li>組長：陳儀玲</li>
+                        <li>組員：顏敬柏</li>
+                        <li>組員：李昕</li>
+                        <li>組員：林美馨</li>
+                    </ul>
+                    </div>
                     <ul class="actions">
-                        <li><a href="#banner" class="button scrolly">Back</a></li>
+                        <li><a href="#banner" class="button scrolly">Back to top</a></li>
                     </ul>
                   </div>
                 </section>
+
+                <!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="icons">
+								<li><a target="_blank" href="https://github.com/jeremy5189/GatewayManager" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                                <li><a target="_blank" href="https://github.com/jeremy5189/HomeGateway" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; 2016 Goodlab</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
 
             </div>
         </div>

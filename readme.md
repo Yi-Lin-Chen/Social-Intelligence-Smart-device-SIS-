@@ -1,8 +1,8 @@
 # Gateway Manager
 
-### A project under the [Social Intelligence Smartlock (SIS)](http://sis.patricks.tw)
+### A project under the [Social Intelligence Smart-device (SIS)](http://sis.patricks.tw)
 
-Home Gateway Manager is a WebApp designed to control access of the smart lock system. The WebApp accepts user logging in via Facebook and sends this request to the manager. If the manager approves this request, the user will then receive a QR code by mail which he/she could use it to unlock the smart lock.
+SIS Gateway Manager is a WebApp designed to control access of the smart lock system. The WebApp accepts user logging in via Facebook and sends this request to the manager. If the manager approves this request, the user will then receive a QR code by mail which he/she could use it to unlock the smart lock.
 
 This WebApp also provides a API to accept query from the QR Code Reader.
 
