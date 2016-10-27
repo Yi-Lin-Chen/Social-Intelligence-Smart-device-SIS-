@@ -16,7 +16,7 @@
 
           <!-- Header -->
             <header id="header" class="alt">
-              <a href="index.html" class="logo"><strong>Gateway</strong> <span>Manager</span></a>
+              <a href="/" class="logo"><strong>Gateway</strong> <span>Manager</span></a>
               <nav>
                 <a href="#menu">Menu</a>
               </nav>
@@ -41,7 +41,7 @@
                   <p><h4>Social Intelligence Smart-device，簡稱SIS，是一套可供訪客使用的家戶物聯網系統</h4></p>
                 </div>
                 <ul class="actions">
-                  <li><a href="#one" class="button next scrolly pull-right">Get Started</a></li>
+                  <li><a href="#one" class="button next scrolly">Get Started</a></li>
                 </ul>
               </div>
             </section>
