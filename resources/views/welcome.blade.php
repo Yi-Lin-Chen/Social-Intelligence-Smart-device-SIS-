@@ -16,7 +16,7 @@
 
           <!-- Header -->
             <header id="header" class="alt">
-              <a href="/" class="logo"><strong>SIS</strong> <span>GatewayManager</span></a>
+              <a href="/" class="logo"><strong>SIS</strong> <span>Gateway Manager</span></a>
               <nav>
                 <a href="#menu">Menu</a>
               </nav>
