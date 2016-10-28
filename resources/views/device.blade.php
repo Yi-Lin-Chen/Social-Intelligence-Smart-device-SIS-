@@ -199,7 +199,7 @@ $(document).ready(function(){
                 </div>
             </div>
             <div class="panel panel-default">
-                <div class="panel-heading">Change map background<span id="pull-right"></span></div>
+                <div class="panel-heading">Change map background<span class="pull-right"><a href="/img/room_layout.jpg">Example</a></span></div>
                 <div class="panel-body" id="device-panel">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
