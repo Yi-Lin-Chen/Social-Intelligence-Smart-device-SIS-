@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Device;
+use App\Access;
 use Auth;
 use Log;
 use Storage;
@@ -30,7 +31,9 @@ class DeviceController extends Controller
    */
   public function index()
   {
-      return view('device');
+      return view('device',[
+          'data' => Access::all()
+      ]);
   }
 
   public function all_device(){
@@ -121,7 +124,7 @@ class DeviceController extends Controller
           return redirect('/device')->with('status', 'Upload success.');
       }
       else{
-          return redirect('/device')->with('status', 'Upload fail.');
+          return redirect('/device')->withErrors('Upload fail.');
       }
   }
 

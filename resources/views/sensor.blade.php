@@ -318,16 +318,6 @@ $(function () {
 
 
 @section('content')
-
-@foreach( $data as $access)
-    @if( !$access->isExpired() )
-        <?php $all_expired = false; ?>
-    @endif
-@endforeach
-
-@if ( $all_expired == true )
-    <div class="col-md-6 col-md-offset-3 alert alert-danger">You have no active access, please <a href="/request">request</a> for a access first.</div>
-@else
 <div class="container">
 
     <div class="row">
@@ -412,5 +402,4 @@ $(function () {
     </div>
 
 </div>
-@endif
 @endsection

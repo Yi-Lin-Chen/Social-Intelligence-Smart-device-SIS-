@@ -82,6 +82,17 @@ $(function() {
 @endsection
 
 @section('content')
+
+@foreach( $data as $access)
+  <?php $all_expired = false; ?>
+    @if( $access->isExpired() )
+        <?php $all_expired = true; ?>
+    @endif
+@endforeach
+
+@if ( $all_expired == true )
+    <div class="col-md-6 col-md-offset-3 alert alert-danger">You have no active access, please <a href="/request">request</a> for a access first.</div>
+@else
 <div class="container">
     @if( !Auth::user()->isManager() && Auth::user()->fb_group_level() < 2 )
         <div class="alert alert-danger">Oops, you have no access to this page.</div>
@@ -127,4 +138,6 @@ $(function() {
         </div>
     @endif
 </div>
+@endif
+
 @endsection

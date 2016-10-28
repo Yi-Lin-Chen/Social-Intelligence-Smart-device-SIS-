@@ -178,6 +178,17 @@ $(document).ready(function(){
 @endsection
 
 @section('content')
+
+@foreach( $data as $access)
+  <?php $all_expired = false; ?>
+    @if( $access->isExpired() )
+        <?php $all_expired = true; ?>
+    @endif
+@endforeach
+
+@if ( $all_expired == true )
+    <div class="col-md-6 col-md-offset-3 alert alert-danger">You have no active access, please <a href="/request">request</a> for a access first.</div>
+@else
 <div class="container">
     @if( !Auth::user()->isManager() && Auth::user()->fb_group_level() < 1 )
         <div class="alert alert-danger">Oops, you have no access to this page.</div>
@@ -200,27 +211,35 @@ $(document).ready(function(){
 
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">Change map background<span class="pull-right"><a href="/img/room_layout.jpg">Example</a></span></div>
-                    <div class="panel-body" id="device-panel">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-                        <form action="/device/upload" method="post" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <label for="exampleInputFile">File input</label>
-                                <input type="file" id="file" name="photo">
-                                <p class="help-block">Please select image.</p>
-                            </div>
-                            <button type="submit" class="btn btn-sm btn-default pull-right">Upload</button>
-                        </form>
+                @if ( Auth::user()->isManager() )
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Change map background<span class="pull-right"><a href="/img/room_layout.jpg">Example</a></span></div>
+                        <div class="panel-body" id="device-panel">
+                            @if (session('status'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
+                            @if( isset($errors) && count($errors) > 0 )
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $errors->first() }}
+                                </div>
+                            @endif
+                            <form action="/device/upload" method="post" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <div class="form-group">
+                                    <label for="exampleInputFile">File input</label>
+                                    <input type="file" id="file" name="photo">
+                                    <p class="help-block">Please select image.</p>
+                                </div>
+                                <button type="submit" class="btn btn-sm btn-default pull-right">Upload</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     @endif
 </div>
+@endif
 @endsection
