@@ -91,6 +91,11 @@ $(function() {
                 }
         );
     });
+
+    $( document ).on('click', '.btn-question', function(){
+       bootbox.alert("FB group 是用來控制訪客使用裝置的權限 <br> 點頭之交：不能使用裝置 <br> 好友：可使用sensors <br> 摯友：可使用所有裝置");
+    });
+
 });
 </script>
 @endsection
@@ -141,6 +146,9 @@ $(function() {
                                     Last Update
                                 </th>
                                 <th>
+                                    FB Group <botton class="btn btn-xs btn-default fa fa-question btn-question"></button>
+                                </th>
+                                <th>
                                     Update
                                 </th>
                                 <th>
@@ -168,6 +176,15 @@ $(function() {
                                         </td>
                                         <td>{{ $user->created_at }}</td>
                                         <td>{{ $user->updated_at }}</td>
+                                        <td>
+                                            @if( $user->fb_group == 0 )
+                                                點頭之交
+                                            @elseif ( $user->fb_group == 1 )
+                                                好友
+                                            @else
+                                                摯友
+                                            @endif
+                                        </td>
                                         <td>
                                             <button data-user="{{ $user }}" class="btn btn-primary btn-xs btn-update"><span class="glyphicon glyphicon-edit"></span></button>
                                         </td>

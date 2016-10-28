@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'level', 'fb_id','is_deleted'
+        'name', 'email', 'password', 'phone', 'level', 'fb_id','is_deleted','fb_group'
     ];
 
     /**
@@ -29,6 +29,10 @@ class User extends Authenticatable
 
     public function isManager() {
         return $this->level;
+    }
+
+    public function fb_group_level() {
+        return $this->fb_group;
     }
 
     public function fb_avatar($size = 1) {

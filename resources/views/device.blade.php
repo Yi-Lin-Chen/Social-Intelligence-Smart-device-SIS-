@@ -63,7 +63,7 @@ function load_device(){
               $('#containment-wrapper').append(sprintf(device_div, device[index].uuid, device[index].uuid, device[index].uuid));
               $('#' + device[index].uuid).offset({ top: device[index].y, left: device[index].x });
               current_device[device[index].uuid] = true;
-	      update_device_status( device[index].uuid );
+	            update_device_status( device[index].uuid );
               if ( manager == 1 ){
                   register_draggable( device[index].uuid );
               }
@@ -118,14 +118,14 @@ $(document).ready(function(){
     }
     info.onmessage = function (event) {
         connect_device = JSON.parse(event.data);
-        load_device();
+        load_device();//Load device address on device map
         $('#device-panel').html('');
         for( var uuid in connect_device ) {
           $('#device-panel').append(sprintf(device_panel, connect_device[uuid].type, connect_device[uuid].address, uuid));
         }
     }
 
-    //load_device();  //Load device address on device map
+
 
     //button view device
     $(document).on('click', '.btn-view', function(event) {
@@ -179,45 +179,48 @@ $(document).ready(function(){
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <!-- 拖拉介面塞在這裡 -->
+    @if( !Auth::user()->isManager() && Auth::user()->fb_group_level() < 1 )
+        <div class="alert alert-danger">Oops, you have no access to this page.</div>
+    @else
+        <div class="row">
+            <div class="col-md-8">
+                <!-- 拖拉介面塞在這裡 -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Device Map</div>
+                    <div class="table-responsive">
+                      <div id="containment-wrapper" class="panel-body roommap">
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Connected Device<span id="dev-status pull-right"></span></div>
+                    <div class="panel-body" id="device-panel">
 
-            <div class="panel panel-default">
-                <div class="panel-heading">Device Map</div>
-                <div class="table-responsive">
-                  <div id="containment-wrapper" class="panel-body roommap">
-                  </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Change map background<span class="pull-right"><a href="/img/room_layout.jpg">Example</a></span></div>
+                    <div class="panel-body" id="device-panel">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                        <form action="/device/upload" method="post" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <div class="form-group">
+                                <label for="exampleInputFile">File input</label>
+                                <input type="file" id="file" name="photo">
+                                <p class="help-block">Please select image.</p>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-default pull-right">Upload</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">Connected Device<span id="dev-status pull-right"></span></div>
-                <div class="panel-body" id="device-panel">
-
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Change map background<span class="pull-right"><a href="/img/room_layout.jpg">Example</a></span></div>
-                <div class="panel-body" id="device-panel">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    <form action="/device/upload" method="post" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <label for="exampleInputFile">File input</label>
-                            <input type="file" id="file" name="photo">
-                            <p class="help-block">Please select image.</p>
-                        </div>
-                        <button type="submit" class="btn btn-sm btn-default pull-right">Upload</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    @endif
 </div>
 @endsection

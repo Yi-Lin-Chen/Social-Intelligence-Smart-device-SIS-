@@ -34,8 +34,12 @@ class DeviceController extends Controller
   }
 
   public function all_device(){
-      return [ 'device'=>Device::all(), 'manager'=>Auth::user()->isManager()];
+      return [
+        'device'   => Device::all(),
+        'manager'  => Auth::user()->isManager(),
+      ];
   }
+
 
   /**
    * Show the form for creating a new resource.
