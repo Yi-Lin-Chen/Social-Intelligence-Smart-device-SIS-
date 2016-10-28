@@ -5,7 +5,7 @@
 @section('styles')
 <style media="screen">
 .roommap{
-    background-image: url("/img/room_layout.jpg");
+    background-image: url("/storage/room_layout.jpg");
     background-size: 600px 600px;
     margin:auto;
     width: 600px;

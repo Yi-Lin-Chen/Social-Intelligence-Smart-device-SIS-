@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-
 use App\Http\Requests;
 use App\Device;
 use Auth;
 use Log;
+use Storage;
 
 class DeviceController extends Controller
 {
@@ -103,14 +102,27 @@ class DeviceController extends Controller
   {
       $path = null;
       if( $request->file('photo') != null ) {
-          $path = $request->file('photo')->store('photos');
-          Log::info($path);
-          //Storage::move( $path, '../public/img/room_layout.jpg');
+
+          $path = Storage::put('public', $request->file('photo'));
+
+          //Storage::move($path, 'storage')
+          Log::debug($path);
+          //$path = $this->fixUploadPath($path);
+          Log::debug($path);
+
+          Storage::delete('public/room_layout.jpg');
+          $new_path = Storage::move($path, 'public/room_layout.jpg');
+          Log::debug($new_path);
+
           return redirect('/device')->with('status', 'Upload success.');
       }
       else{
           return redirect('/device')->with('status', 'Upload fail.');
       }
+  }
+
+  protected function fixUploadPath($path) {
+      return str_replace('public/', 'pubilc/', $path);
   }
 
   /**
