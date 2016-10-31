@@ -138,14 +138,21 @@
                 </div>
 
                 <div class="row custom-row">
-
                     <div class="col-md-12">
                         <a href="https://www.facebook.com/{{ $user->fb_id }}" target="_blank" class="btn btn-block btn-social btn-facebook">
                            <span class="fa fa-facebook"></span> View Profile
                         </a>
                     </div>
-
                 </div>
+
+                <div class="row custom-row">
+                    <div class="col-md-12">
+                        <a href="" target="_blank" class="btn btn-block btn-social btn-google">
+                           <span class="fa fa-google"></span> View Profile
+                        </a>
+                    </div>
+                </div>
+
 
                 <div class="row custom-row">
                     <div class="col-md-6 btn-col">
