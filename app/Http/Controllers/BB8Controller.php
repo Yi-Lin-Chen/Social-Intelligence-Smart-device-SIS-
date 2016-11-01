@@ -30,8 +30,8 @@ class BB8Controller extends Controller
      */
     public function index()
     {
-        return view('bb8-control',[
-            'data' => Access::all()
+        return view('bb8-control', [
+            'data' => Access::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get()
         ]);
     }
 

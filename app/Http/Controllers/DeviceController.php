@@ -32,7 +32,7 @@ class DeviceController extends Controller
   public function index()
   {
       return view('device',[
-          'data' => Access::all()
+          'data' => Access::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get()
       ]);
   }
 

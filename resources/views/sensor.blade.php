@@ -318,88 +318,101 @@ $(function () {
 
 
 @section('content')
-<div class="container">
 
-    <div class="row">
+<?php $all_expired = true; ?>
+@foreach( $data as $access)
+    @if( !$access->isExpired() )
+        <?php $all_expired = false; ?>
+    @endif
+@endforeach
 
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">Sensor 狀態</div>
-                <div class="panel-body">
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <td>狀態</td>
-                                <td id="dev-status">Loading...</td>
-                            </tr>
-                            <tr>
-                                <td>ID</td>
-                                <td id="dev-id"></td>
-                            </tr>
-                            <tr>
-                                <td>UUID</td>
-                                <td id="dev-uuid"></td>
-                            </tr>
-                            <tr>
-                                <td>型號</td>
-                                <td id="dev-type"></td>
-                            </tr>
-                            <tr>
-                                <td>藍芽位址</td>
-                                <td id="dev-address"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+@if( !Auth::user()->isManager() && Auth::user()->fb_group_level() < 1 )
+    <div class="alert alert-danger">Oops, you have no access to this page.</div>
+@else
+  @if ( $all_expired == true && !Auth::user()->isManager())
+      <div class="col-md-6 col-md-offset-3 alert alert-danger">You have no active access, please <a href="/request">request</a> for a access first.</div>
+  @else
+      <div class="container">
+          <div class="row">
+              <div class="col-md-4">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">Sensor 狀態</div>
+                      <div class="panel-body">
+                          <table class="table table-bordered">
+                              <tbody>
+                                  <tr>
+                                      <td>狀態</td>
+                                      <td id="dev-status">Loading...</td>
+                                  </tr>
+                                  <tr>
+                                      <td>ID</td>
+                                      <td id="dev-id"></td>
+                                  </tr>
+                                  <tr>
+                                      <td>UUID</td>
+                                      <td id="dev-uuid"></td>
+                                  </tr>
+                                  <tr>
+                                      <td>型號</td>
+                                      <td id="dev-type"></td>
+                                  </tr>
+                                  <tr>
+                                      <td>藍芽位址</td>
+                                      <td id="dev-address"></td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
 
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">溫度<span id="label-temp" class="label label-default pull-right">Loading</span></div>
-                <div class="panel-body chart-container">
-                    <div id="chart-temp" class="chart-div"></div>
-                </div>
-            </div>
-        </div>
+              <div class="col-md-4">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">溫度<span id="label-temp" class="label label-default pull-right">Loading</span></div>
+                      <div class="panel-body chart-container">
+                          <div id="chart-temp" class="chart-div"></div>
+                      </div>
+                  </div>
+              </div>
 
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">相對濕度<span id="label-humidity" class="label label-default pull-right">Loading</span></div>
-                <div class="panel-body chart-container">
-                    <div id="chart-humidity" class="chart-div"></div>
-                </div>
-            </div>
-        </div>
+              <div class="col-md-4">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">相對濕度<span id="label-humidity" class="label label-default pull-right">Loading</span></div>
+                      <div class="panel-body chart-container">
+                          <div id="chart-humidity" class="chart-div"></div>
+                      </div>
+                  </div>
+              </div>
 
-    </div>
+          </div>
 
-    <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">紅外線溫度<span id="label-irtemp" class="label label-default pull-right">Loading</span></div>
-                <div class="panel-body chart-container">
-                    <div id="chart-irtemp" class="chart-div"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">大氣壓力<span id="label-bar" class="label label-default pull-right">Loading</span></div>
-                <div class="panel-body chart-container">
-                    <div id="chart-bar" class="chart-div"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">裝置溫度<span id="label-devtemp" class="label label-default pull-right">Loading</span></div>
-                <div class="panel-body chart-container">
-                    <div id="chart-devtemp" class="chart-div"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
+          <div class="row">
+              <div class="col-md-4">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">紅外線溫度<span id="label-irtemp" class="label label-default pull-right">Loading</span></div>
+                      <div class="panel-body chart-container">
+                          <div id="chart-irtemp" class="chart-div"></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">大氣壓力<span id="label-bar" class="label label-default pull-right">Loading</span></div>
+                      <div class="panel-body chart-container">
+                          <div id="chart-bar" class="chart-div"></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">裝置溫度<span id="label-devtemp" class="label label-default pull-right">Loading</span></div>
+                      <div class="panel-body chart-container">
+                          <div id="chart-devtemp" class="chart-div"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  @endif
+@endif
 @endsection
