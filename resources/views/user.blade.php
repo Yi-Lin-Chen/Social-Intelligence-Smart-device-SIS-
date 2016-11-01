@@ -9,6 +9,16 @@
 
 @section('script')
 <script>
+
+$( '#level' ).change(function(){
+    console.log( $( '#level' ).val() )
+    if ( $( '#level' ).val() == 1 ){
+        $( '#fb_group' ).attr( 'disabled' , 'disabled' );
+    }else {
+        $( '#fb_group' ).removeAttr( 'disabled' );
+    }
+});
+
 $(function() {
 
     $(document).on('click' , '.btn-delete' , function(){
@@ -59,10 +69,19 @@ $(function() {
                                     '</div> ' +
                                     '<div class="form-group"> ' +
                                         '<label for="level">Level</label> ' +
-                                            '<select name="level" id="level-update" class="form-control">' +
+                                            '<select name="level" id="level" class="form-control">' +
                                                 '<option value="0">User</option>' +
                                                 '<option value="1">Manager</option>' +
                                             '</select>' +
+                                    '</div>' +
+                                    '<div class="form-group">' +
+                                        '<label for="fb_group">Device Privilege</label>' +
+                                        '<select name="fb_group" id="fb_group" class="form-control">' +
+                                            '<option value="0">Manager</option>' +
+                                            '<option value="1">支援所有設備</option>' +
+                                            '<option value="2">只能使用Sensor</option>' +
+                                            '<option value="3">無法使用任何裝置</option>' +
+                                      '</select>' +
                                     '</div>' +
                                     '<div class="form-group">' +
                                         '<label for="email">Email address</label>' +
@@ -82,9 +101,12 @@ $(function() {
                                         '<label for="password_confirmation">New Password</label> ' +
                                         '<input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm New Password">' +
                                     '</div>' +
+                                    '<div class="form-group"> ' +
+                                        '<hr>' +
+                                        '<button type="submit" class="btn btn-default pull-right">Update</button>' +
+                                    '</div>' +
                                 '</div>' +
 
-                                '<button type="submit" class="btn btn-default">Update</button>' +
                             '</form>' +
                         '</div>' +
                     '</div>'
@@ -146,7 +168,7 @@ $(function() {
                                     Last Update
                                 </th>
                                 <th>
-                                    FB Group <botton class="btn btn-xs btn-default fa fa-question btn-question"></button>
+                                    Device Privilege
                                 </th>
                                 <th>
                                     Update
@@ -178,11 +200,13 @@ $(function() {
                                         <td>{{ $user->updated_at }}</td>
                                         <td>
                                             @if( $user->fb_group == 0 )
-                                                點頭之交
+                                                -
                                             @elseif ( $user->fb_group == 1 )
-                                                好友
+                                                支援所有裝置
+                                            @elseif ( $user->fb_group == 2 )
+                                                只能使用Sensor
                                             @else
-                                                摯友
+                                                無法使用任何裝置
                                             @endif
                                         </td>
                                         <td>
@@ -226,6 +250,15 @@ $(function() {
                                     <option value="null">Please select</option>
                                     <option value="0">User</option>
                                     <option value="1">Manager</option>
+                                </select>
+                              </div>
+                              <div class="form-group">
+                                <label for="fb_group">Device Privilege</label>
+                                <select name="fb_group" id="fb_group" class="form-control">
+                                    <option value="0">Please select</option>
+                                    <option value="1">支援所有設備</option>
+                                    <option value="2">只能使用Sensor</option>
+                                    <option value="3">無法使用任何裝置</option>
                                 </select>
                               </div>
                               <div class="form-group">
