@@ -14,10 +14,12 @@ $( '#level' ).change(function(){
     console.log( $( '#level' ).val() )
     if ( $( '#level' ).val() == 1 ){
         $( '#fb_group' ).attr( 'disabled' , 'disabled' );
+        $( '#fb_group' ).val('3');
     }else {
         $( '#fb_group' ).removeAttr( 'disabled' );
     }
 });
+
 
 $(function() {
 
@@ -77,10 +79,10 @@ $(function() {
                                     '<div class="form-group">' +
                                         '<label for="fb_group">Device Privilege</label>' +
                                         '<select name="fb_group" id="fb_group" class="form-control">' +
-                                            '<option value="0">Manager</option>' +
-                                            '<option value="1">支援所有設備</option>' +
-                                            '<option value="2">只能使用Sensor</option>' +
-                                            '<option value="3">無法使用任何裝置</option>' +
+                                            '<option value="3">Manager</option>' +
+                                            '<option value="2">可使用所有設備</option>' +
+                                            '<option value="1">只能使用Sensor</option>' +
+                                            '<option value="0">無法使用任何裝置</option>' +
                                       '</select>' +
                                     '</div>' +
                                     '<div class="form-group">' +
@@ -199,11 +201,11 @@ $(function() {
                                         <td>{{ $user->created_at }}</td>
                                         <td>{{ $user->updated_at }}</td>
                                         <td>
-                                            @if( $user->fb_group == 0 )
+                                            @if( $user->fb_group == 3 )
                                                 -
-                                            @elseif ( $user->fb_group == 1 )
-                                                支援所有裝置
                                             @elseif ( $user->fb_group == 2 )
+                                                支援所有裝置
+                                            @elseif ( $user->fb_group == 1 )
                                                 只能使用Sensor
                                             @else
                                                 無法使用任何裝置
@@ -255,10 +257,10 @@ $(function() {
                               <div class="form-group">
                                 <label for="fb_group">Device Privilege</label>
                                 <select name="fb_group" id="fb_group" class="form-control">
-                                    <option value="0">Please select</option>
-                                    <option value="1">支援所有設備</option>
-                                    <option value="2">只能使用Sensor</option>
-                                    <option value="3">無法使用任何裝置</option>
+                                    <option value="3">Manager</option>
+                                    <option value="2">可使用所有設備</option>
+                                    <option value="1">只能使用Sensor</option>
+                                    <option value="0">無法使用任何裝置</option>
                                 </select>
                               </div>
                               <div class="form-group">

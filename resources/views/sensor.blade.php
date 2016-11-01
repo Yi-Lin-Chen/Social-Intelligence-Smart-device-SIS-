@@ -319,6 +319,7 @@ $(function () {
 
 @section('content')
 
+<div class="container">
 <?php $all_expired = true; ?>
 @foreach( $data as $access)
     @if( !$access->isExpired() )
@@ -332,7 +333,6 @@ $(function () {
   @if ( $all_expired == true && !Auth::user()->isManager())
       <div class="col-md-6 col-md-offset-3 alert alert-danger">You have no active access, please <a href="/request">request</a> for a access first.</div>
   @else
-      <div class="container">
           <div class="row">
               <div class="col-md-4">
                   <div class="panel panel-default">
@@ -412,7 +412,7 @@ $(function () {
                   </div>
               </div>
           </div>
-      </div>
   @endif
 @endif
+</div>
 @endsection
