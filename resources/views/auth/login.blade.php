@@ -23,17 +23,19 @@
                             <a href="/auth/facebook/redirect" class="btn btn-block btn-social btn-facebook">
                                <span class="fa fa-facebook"></span> Sign in with Facebook
                             </a>
-                            <hr>
                         </div>
                     </div>
+
+		    <hr>
                     <div class="row google-login-row">
                         <div class="col-md-8 col-md-offset-2">
-                            <a href="" class="btn btn-google btn-block btn-social">
+                            <a href="#" class="btn btn-google btn-block btn-social">
                                <span class="fa fa-google"></span> Sign in with Google
                             </a>
                             <hr>
                         </div>
                     </div>
+
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
 
