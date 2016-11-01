@@ -146,15 +146,6 @@
                 </div>
 
                 <div class="row custom-row">
-                    <div class="col-md-12">
-                        <a href="" target="_blank" class="btn btn-block btn-social btn-google">
-                           <span class="fa fa-google"></span> View Profile
-                        </a>
-                    </div>
-                </div>
-
-
-                <div class="row custom-row">
                     <div class="col-md-6 btn-col">
                         <a href="/approval/grant/{{ $request->id }}" class="btn btn-primary btn-enter"><span class="glyphicon glyphicon-ok"></span> Approve</a>
                     </div>
